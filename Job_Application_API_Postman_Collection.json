@@ -1,0 +1,724 @@
+{
+  "info": {
+    "name": "Job Application API",
+    "description": "Complete API collection for testing job application system with freelancer OTP authentication",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "base_url",
+      "value": "http://localhost:3000/api",
+      "type": "string"
+    },
+    {
+      "key": "freelancer_token",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "user_token",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "admin_token",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "job_id",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "application_id",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "freelancer_id",
+      "value": "",
+      "type": "string"
+    }
+  ],
+  "item": [
+    {
+      "name": "1. Freelancer Authentication",
+      "item": [
+        {
+          "name": "Send OTP",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "if (pm.response.code === 200) {",
+                  "    const response = pm.response.json();",
+                  "    if (response.data.otp) {",
+                  "        pm.globals.set('otp', response.data.otp);",
+                  "        console.log('OTP saved:', response.data.otp);",
+                  "    }",
+                  "}"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"phone\": \"9876543210\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/freelancer/send-otp",
+              "host": ["{{base_url}}"],
+              "path": ["freelancer", "send-otp"]
+            },
+            "description": "Send OTP to freelancer's phone number"
+          }
+        },
+        {
+          "name": "Verify OTP & Login",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "if (pm.response.code === 200) {",
+                  "    const response = pm.response.json();",
+                  "    if (response.data.token) {",
+                  "        pm.collectionVariables.set('freelancer_token', response.data.token);",
+                  "        console.log('Freelancer token saved');",
+                  "    }",
+                  "    if (response.data.freelancer && response.data.freelancer.id) {",
+                  "        pm.collectionVariables.set('freelancer_id', response.data.freelancer.id);",
+                  "        console.log('Freelancer ID saved');",
+                  "    }",
+                  "}"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"phone\": \"9876543210\",\n  \"otp\": \"{{otp}}\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/freelancer/verify-otp",
+              "host": ["{{base_url}}"],
+              "path": ["freelancer", "verify-otp"]
+            },
+            "description": "Verify OTP and get authentication token"
+          }
+        },
+        {
+          "name": "Complete Registration",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{freelancer_token}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"John Doe Freelancer\",\n  \"email\": \"john.freelancer@example.com\",\n  \"profession\": \"Full Stack Developer\",\n  \"summary\": \"Experienced developer with 5+ years in web development\",\n  \"pricePerHr\": 50,\n  \"skills\": [\"JavaScript\", \"React\", \"Node.js\", \"MongoDB\"],\n  \"languages\": [\"English\", \"Hindi\"],\n  \"state\": \"California\",\n  \"city\": \"San Francisco\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/freelancer/register",
+              "host": ["{{base_url}}"],
+              "path": ["freelancer", "register"]
+            },
+            "description": "Complete freelancer registration with profile details"
+          }
+        }
+      ]
+    },
+    {
+      "name": "2. User Authentication (For Job Posting)",
+      "item": [
+        {
+          "name": "Send User OTP",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "if (pm.response.code === 200) {",
+                  "    const response = pm.response.json();",
+                  "    if (response.data.otp) {",
+                  "        pm.globals.set('user_otp', response.data.otp);",
+                  "        console.log('User OTP saved:', response.data.otp);",
+                  "    }",
+                  "}"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"phone\": \"9876543211\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/user/send-otp",
+              "host": ["{{base_url}}"],
+              "path": ["user", "send-otp"]
+            },
+            "description": "Send OTP to user's phone number for job posting"
+          }
+        },
+        {
+          "name": "Verify User OTP & Login",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "if (pm.response.code === 200) {",
+                  "    const response = pm.response.json();",
+                  "    if (typeof response === 'string') {",
+                  "        pm.collectionVariables.set('user_token', response);",
+                  "        console.log('User token saved');",
+                  "    } else if (response.token) {",
+                  "        pm.collectionVariables.set('user_token', response.token);",
+                  "        console.log('User token saved');",
+                  "    }",
+                  "}"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"phone\": \"9876543211\",\n  \"otp\": \"{{user_otp}}\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/user/verify-otp",
+              "host": ["{{base_url}}"],
+              "path": ["user", "verify-otp"]
+            },
+            "description": "Verify user OTP and get authentication token"
+          }
+        },
+        {
+          "name": "Complete User Registration",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{user_token}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Tech Company Ltd\",\n  \"email\": \"hr@techcompany.com\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/user/register",
+              "host": ["{{base_url}}"],
+              "path": ["user", "register"]
+            },
+            "description": "Complete user registration"
+          }
+        }
+      ]
+    },
+    {
+      "name": "3. Job Management",
+      "item": [
+        {
+          "name": "Create Job",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "if (pm.response.code === 201) {",
+                  "    const response = pm.response.json();",
+                  "    if (response.data._id) {",
+                  "        pm.collectionVariables.set('job_id', response.data._id);",
+                  "        console.log('Job ID saved:', response.data._id);",
+                  "    }",
+                  "}"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{user_token}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"title\": \"React Developer Needed\",\n  \"description\": \"Looking for an experienced React developer to build a modern web application. Must have experience with hooks, state management, and API integration.\",\n  \"requirements\": [\"React.js\", \"JavaScript ES6+\", \"Redux/Context API\", \"REST APIs\"],\n  \"duration\": 30,\n  \"city\": \"San Francisco\",\n  \"state\": \"California\",\n  \"venue\": \"Remote/Hybrid\",\n  \"budget\": 5000,\n  \"category\": \"64f7a2b8c9d4e5f6g7h8i9j9\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/job",
+              "host": ["{{base_url}}"],
+              "path": ["job"]
+            },
+            "description": "Create a new job posting"
+          }
+        },
+        {
+          "name": "Get All Jobs",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/job/search?title=React",
+              "host": ["{{base_url}}"],
+              "path": ["job", "search"],
+              "query": [
+                {
+                  "key": "title",
+                  "value": "React"
+                }
+              ]
+            },
+            "description": "Search jobs by title"
+          }
+        },
+        {
+          "name": "Get Job by ID",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/job/{{job_id}}",
+              "host": ["{{base_url}}"],
+              "path": ["job", "{{job_id}}"]
+            },
+            "description": "Get specific job details"
+          }
+        }
+      ]
+    },
+    {
+      "name": "4. Job Applications (Freelancer)",
+      "item": [
+        {
+          "name": "Apply to Job",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "if (pm.response.code === 201) {",
+                  "    const response = pm.response.json();",
+                  "    if (response.data._id) {",
+                  "        pm.collectionVariables.set('application_id', response.data._id);",
+                  "        console.log('Application ID saved:', response.data._id);",
+                  "    }",
+                  "}"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{freelancer_token}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"jobId\": \"{{job_id}}\",\n  \"proposedRate\": 45\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/job/apply",
+              "host": ["{{base_url}}"],
+              "path": ["job", "apply"]
+            },
+            "description": "Apply to a job with proposed rate"
+          }
+        },
+        {
+          "name": "Get My Applications",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{freelancer_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/job/applications/my?page=1&limit=10",
+              "host": ["{{base_url}}"],
+              "path": ["job", "applications", "my"],
+              "query": [
+                {
+                  "key": "page",
+                  "value": "1"
+                },
+                {
+                  "key": "limit",
+                  "value": "10"
+                },
+                {
+                  "key": "status",
+                  "value": "applied",
+                  "disabled": true
+                }
+              ]
+            },
+            "description": "Get freelancer's job applications"
+          }
+        },
+        {
+          "name": "Get Application Stats",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{freelancer_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/job/applications/stats",
+              "host": ["{{base_url}}"],
+              "path": ["job", "applications", "stats"]
+            },
+            "description": "Get freelancer's application statistics"
+          }
+        },
+        {
+          "name": "Check Job Application Status",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{freelancer_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/freelancer/jobs/{{job_id}}/check",
+              "host": ["{{base_url}}"],
+              "path": ["freelancer", "jobs", "{{job_id}}", "check"]
+            },
+            "description": "Check if freelancer applied to specific job"
+          }
+        },
+        {
+          "name": "Withdraw Application",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{freelancer_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/job/applications/{{application_id}}/withdraw",
+              "host": ["{{base_url}}"],
+              "path": ["job", "applications", "{{application_id}}", "withdraw"]
+            },
+            "description": "Withdraw job application"
+          }
+        }
+      ]
+    },
+    {
+      "name": "5. Job Applications (Employer)",
+      "item": [
+        {
+          "name": "Get Job Applications",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{user_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/job/{{job_id}}/applications",
+              "host": ["{{base_url}}"],
+              "path": ["job", "{{job_id}}", "applications"]
+            },
+            "description": "Get all applications for a specific job"
+          }
+        },
+        {
+          "name": "Update Application Status - Shortlist",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{user_token}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"status\": \"shortlisted\",\n  \"notes\": \"Great portfolio, scheduling interview\",\n  \"interviewScheduled\": \"2023-12-25T14:00:00Z\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/job/applications/{{application_id}}/status",
+              "host": ["{{base_url}}"],
+              "path": ["job", "applications", "{{application_id}}", "status"]
+            },
+            "description": "Shortlist a candidate"
+          }
+        },
+        {
+          "name": "Update Application Status - Hire",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{user_token}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"status\": \"hired\",\n  \"notes\": \"Perfect fit for the project, starting immediately\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/job/applications/{{application_id}}/status",
+              "host": ["{{base_url}}"],
+              "path": ["job", "applications", "{{application_id}}", "status"]
+            },
+            "description": "Hire a candidate"
+          }
+        },
+        {
+          "name": "Update Application Status - Reject",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{user_token}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"status\": \"rejected\",\n  \"notes\": \"Thank you for your application, we went with another candidate\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/job/applications/{{application_id}}/status",
+              "host": ["{{base_url}}"],
+              "path": ["job", "applications", "{{application_id}}", "status"]
+            },
+            "description": "Reject a candidate"
+          }
+        },
+        {
+          "name": "Get Application Analytics",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{user_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/job/applications/analytics?jobId={{job_id}}",
+              "host": ["{{base_url}}"],
+              "path": ["job", "applications", "analytics"],
+              "query": [
+                {
+                  "key": "jobId",
+                  "value": "{{job_id}}"
+                }
+              ]
+            },
+            "description": "Get application analytics for employer"
+          }
+        }
+      ]
+    },
+    {
+      "name": "6. Common/Shared Endpoints",
+      "item": [
+        {
+          "name": "Get Application Details",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{freelancer_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/job/applications/{{application_id}}",
+              "host": ["{{base_url}}"],
+              "path": ["job", "applications", "{{application_id}}"]
+            },
+            "description": "Get detailed application information"
+          }
+        },
+        {
+          "name": "Browse All Freelancers",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/freelancer/all?page=1&limit=10&skills=JavaScript,React",
+              "host": ["{{base_url}}"],
+              "path": ["freelancer", "all"],
+              "query": [
+                {
+                  "key": "page",
+                  "value": "1"
+                },
+                {
+                  "key": "limit",
+                  "value": "10"
+                },
+                {
+                  "key": "skills",
+                  "value": "JavaScript,React"
+                },
+                {
+                  "key": "minPrice",
+                  "value": "20",
+                  "disabled": true
+                },
+                {
+                  "key": "maxPrice",
+                  "value": "100",
+                  "disabled": true
+                }
+              ]
+            },
+            "description": "Browse all available freelancers"
+          }
+        },
+        {
+          "name": "Search Freelancers",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/freelancer/search?name=John&profession=Developer",
+              "host": ["{{base_url}}"],
+              "path": ["freelancer", "search"],
+              "query": [
+                {
+                  "key": "name",
+                  "value": "John"
+                },
+                {
+                  "key": "profession",
+                  "value": "Developer"
+                },
+                {
+                  "key": "skills",
+                  "value": "React",
+                  "disabled": true
+                }
+              ]
+            },
+            "description": "Search freelancers by criteria"
+          }
+        }
+      ]
+    },
+    {
+      "name": "7. Admin Operations",
+      "item": [
+        {
+          "name": "Bulk Update Application Status",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{admin_token}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"applicationIds\": [\"{{application_id}}\"],\n  \"status\": \"rejected\",\n  \"notes\": \"Bulk rejection due to project cancellation\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/job/applications/bulk-update",
+              "host": ["{{base_url}}"],
+              "path": ["job", "applications", "bulk-update"]
+            },
+            "description": "Bulk update multiple application statuses (admin only)"
+          }
+        }
+      ]
+    }
+  ]
+}

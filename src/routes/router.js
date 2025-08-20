@@ -1,7 +1,13 @@
 import express from "express";
 import { AdminRoutes } from "./admin.route.js";
 import { CategoryRoutes } from "./category.route.js";
+import { UserRoutes } from "./user.route.js";
+import { JobRoute } from "./job.route.js";
+import { FreelancerRoutes } from "./freelancer.route.js";
 const router = express.Router();
-router.use('/admin',AdminRoutes);
-router.use('/category', CategoryRoutes);
+router.use("/admin", AdminRoutes);
+router.use("/category", CategoryRoutes);
+router.use("/user", UserRoutes);
+router.use("/job", JobRoute);
+router.use("/freelancer", FreelancerRoutes);
 export default router;
