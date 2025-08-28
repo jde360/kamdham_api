@@ -1,3 +1,4 @@
+import { getPlatformFee } from "../../../utils/platformFee.js";
 import TransactionModel from "../model/transaction.model.js";
 
 const transactionService = {
@@ -5,7 +6,7 @@ const transactionService = {
         try {
             const {
                 amount,
-                platformFee = amount * 0.1,
+                platformFee = getPlatformFee(amount),
                 paymentId,
                 status,
                 user,

@@ -1,17 +1,16 @@
-import WithdrawalService from "../service/withdrawal.service.js";
-import { formattedResponse } from "../../../utils/formatedRes.js";
-import { httpCode } from "../../../utils/httpCode.js";
 import AppError from "../../../utils/error.js";
+import { httpCode } from "../../../utils/httpCode.js";
+import WithdrawalService from "../service/withdrawal.service.js";
 
 // Create withdrawal request (for freelancers)
 export const createWithdrawalRequest = async (req, res, next) => {
   try {
     const { amount, paymentMethod, paymentDetails } = req.body;
-    const freelancerId = req.user.id;
+    const freelancerId = req.user.userId;
 
     // Validation
     if (!amount || amount <= 0) {
-      throw new AppError("Amount must be greater than 0", httpCode.BAD_REQUEST);
+      throw new AppError("Invalid amount", httpCode.BAD_REQUEST);
     }
 
     if (!paymentMethod || !["bank_transfer", "upi", "paypal", "other"].includes(paymentMethod)) {
@@ -23,33 +22,40 @@ export const createWithdrawalRequest = async (req, res, next) => {
       paymentMethod,
       paymentDetails,
     });
-
-    return res
-      .status(httpCode.CREATED)
-      .json(formattedResponse("Withdrawal request created successfully", withdrawalRequest));
+    res.status(201).json({
+      success: true,
+      message: "Withdrawal request created successfully",
+      data: withdrawalRequest,
+    });
   } catch (error) {
     next(error);
+
+
   }
 };
 
 // Get withdrawal requests for freelancer
 export const getMyWithdrawalRequests = async (req, res, next) => {
   try {
-    const freelancerId = req.user.id;
+    const freelancerId = req.user.userId;
     const { page = 1, limit = 10, status } = req.query;
 
     const filters = { freelancer: freelancerId };
     if (status) {
       filters.status = status;
     }
+console.log(filters);
 
     const result = await WithdrawalService.getWithdrawalRequests(filters, { page, limit });
 
-    return res
-      .status(httpCode.OK)
-      .json(formattedResponse("Withdrawal requests retrieved successfully", result));
+    res.status(200).json({
+      success: true,
+      message: "Withdrawal requests retrieved successfully",
+      data: result,
+    });
   } catch (error) {
     next(error);
+
   }
 };
 
@@ -65,16 +71,17 @@ export const getAllWithdrawalRequests = async (req, res, next) => {
     const result = await WithdrawalService.getWithdrawalRequests(filters, { page, limit });
     const stats = await WithdrawalService.getWithdrawalStats(filters);
 
-    const responseData = {
-      ...result,
-      stats,
-    };
-
-    return res
-      .status(httpCode.OK)
-      .json(formattedResponse("Withdrawal requests retrieved successfully", responseData));
+    res.status(200).json({
+      success: true,
+      message: "Withdrawal requests retrieved successfully",
+      data: {
+        ...result,
+        stats,
+      },
+    });
   } catch (error) {
     next(error);
+
   }
 };
 
@@ -83,18 +90,21 @@ export const approveWithdrawalRequest = async (req, res, next) => {
   try {
     const { requestId } = req.params;
     const { adminNotes, paymentReferenceId } = req.body;
-    const adminId = req.user.id;
+    const adminId = req.user.userId;
 
     const result = await WithdrawalService.approveWithdrawalRequest(requestId, adminId, {
       adminNotes,
       paymentReferenceId,
     });
 
-    return res
-      .status(httpCode.OK)
-      .json(formattedResponse("Withdrawal request approved and processed successfully", result));
+    res.status(200).json({
+      success: true,
+      message: "Withdrawal request approved and processed successfully",
+      data: result,
+    });
   } catch (error) {
     next(error);
+
   }
 };
 
@@ -103,18 +113,21 @@ export const rejectWithdrawalRequest = async (req, res, next) => {
   try {
     const { requestId } = req.params;
     const { rejectionReason, adminNotes } = req.body;
-    const adminId = req.user.id;
+    const adminId = req.user.userId;
 
     const withdrawalRequest = await WithdrawalService.rejectWithdrawalRequest(requestId, adminId, {
       rejectionReason,
       adminNotes,
     });
 
-    return res
-      .status(httpCode.OK)
-      .json(formattedResponse("Withdrawal request rejected successfully", withdrawalRequest));
+    res.status(200).json({
+      success: true,
+      message: "Withdrawal request rejected successfully",
+      data: withdrawalRequest,
+    });
   } catch (error) {
     next(error);
+
   }
 };
 
@@ -131,11 +144,14 @@ export const getWithdrawalRequest = async (req, res, next) => {
       userId
     );
 
-    return res
-      .status(httpCode.OK)
-      .json(formattedResponse("Withdrawal request retrieved successfully", withdrawalRequest));
+    res.status(200).json({
+      success: true,
+      message: "Withdrawal request retrieved successfully",
+      data: withdrawalRequest,
+    });
   } catch (error) {
     next(error);
+    ;
   }
 };
 
@@ -143,14 +159,17 @@ export const getWithdrawalRequest = async (req, res, next) => {
 export const cancelWithdrawalRequest = async (req, res, next) => {
   try {
     const { requestId } = req.params;
-    const freelancerId = req.user.id;
+    const freelancerId = req.user.userId;
 
     const withdrawalRequest = await WithdrawalService.cancelWithdrawalRequest(requestId, freelancerId);
 
-    return res
-      .status(httpCode.OK)
-      .json(formattedResponse("Withdrawal request cancelled successfully", withdrawalRequest));
+    res.status(200).json({
+      success: true,
+      message: "Withdrawal request cancelled successfully",
+      data: withdrawalRequest,
+    });
   } catch (error) {
     next(error);
+
   }
 };

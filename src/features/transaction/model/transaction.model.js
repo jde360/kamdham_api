@@ -11,11 +11,12 @@ const transactionSchema = new mongoose.Schema(
       required: true,
       default: 0.0,
     },
-    platformFee: {
-      type: Number,
-      required: true,
-      default: 0.0,
-    },
+    
+      platformFee: {
+        type: Number,
+        required: true,
+        default: 0.0,
+      },
     paymentId: {
       type: String,
       default: "",
@@ -25,11 +26,7 @@ const transactionSchema = new mongoose.Schema(
       ref: "User",
       default: null,
     },
-    admin: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Admin",
-      default: null,
-    },
+
     freelancer: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Freelancer",

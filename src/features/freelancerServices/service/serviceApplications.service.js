@@ -42,7 +42,7 @@ class ServiceApplicationsService {
         applicationData.pendingAmount = service.price;
       }
 
-      const application = new FreelancerServiceApplicationModel(applicationData);
+      const application = await FreelancerServiceApplicationModel.create(applicationData);
       const transactionData = {
         amount: applicationData.bookingAmount,
         user: applicationData.client,
@@ -259,18 +259,19 @@ class ServiceApplicationsService {
       if (status === "completed") {
         // Logic to update freelancer wallet
         const freelancer = await FreelancerModel.findById(transaction.freelancer);
-        console.log(freelancer);
-        
+        if (!freelancer.wallet) {
+          throw new AppError("Freelancer wallet not found", httpCode.NOT_FOUND);
+        }
         await WalletModel.findByIdAndUpdate(freelancer.wallet, {
           $inc: { balance: transaction.amount },
           $push: { transactions: transaction._id }
         })
-     
+
         // Logic to update admin wallet
 
         const adminWallet = await AdminWalletModel.findOne();
-        console.log(adminWallet);
-        
+
+
         await AdminWalletModel.findByIdAndUpdate(adminWallet._id, {
           $inc: { currentBalance: transaction.amount + transaction.platformFee, totalEarnings: transaction.amount + transaction.platformFee },
           $push: { transactions: transaction._id }

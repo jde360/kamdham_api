@@ -21,8 +21,6 @@ router.patch("/:requestId/cancel", authMiddleware(["freelancer"]), cancelWithdra
 router.get("/admin/all", authMiddleware(["admin"]), getAllWithdrawalRequests);
 router.patch("/admin/:requestId/approve", authMiddleware(["admin"]), approveWithdrawalRequest);
 router.patch("/admin/:requestId/reject", authMiddleware(["admin"]), rejectWithdrawalRequest);
-
-// Shared routes (both freelancer and admin can access)
 router.get("/:requestId", authMiddleware(["freelancer", "admin"]), getWithdrawalRequest);
 
 export const WithdrawalRoutes = router;

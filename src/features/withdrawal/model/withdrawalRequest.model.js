@@ -21,15 +21,10 @@ const withdrawalRequestSchema = new mongoose.Schema(
       type: Number,
       required: true,
     },
-    platformFee: {
-      type: Number,
-      required: true,
-      default: 0.0,
-    },
-    status: {
+     status: {
       type: String,
       required: true,
-      enum: ["pending", "approved", "rejected", "processed", "failed"],
+      enum: ["pending", "approved", "rejected", "processed", "failed", "cancelled"],
       default: "pending",
     },
     paymentMethod: {
@@ -86,7 +81,7 @@ withdrawalRequestSchema.pre("save", async function (next) {
   if (!this.requestId) {
     const timestamp = Date.now().toString();
     const random = Math.random().toString(36).substring(2, 8).toUpperCase();
-    this.requestId = `WR-${timestamp}-${random}`;
+    this.requestId = `KDWR-${timestamp}-${random}`;
   }
   next();
 });

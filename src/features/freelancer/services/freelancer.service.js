@@ -141,7 +141,9 @@ const freelancerService = {
       freelancer.isRegistered = true;
       await freelancer.save();
       const wallet = await walletService.createWallet(freelancer._id);
-      freelancer.wallet = wallet._id;
+      console.log('wallet', wallet);
+      
+      freelancer.wallet = wallet;
       await freelancer.save();
       return {
         name: freelancer.name,

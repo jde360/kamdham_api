@@ -16,7 +16,7 @@ class WithdrawalService {
   static generateTransactionId() {
     const timestamp = Date.now().toString();
     const random = Math.random().toString(36).substring(2, 8).toUpperCase();
-    return `TXN-${timestamp}-${random}`;
+    return `TXNKDW-${timestamp}-${random}`;
   }
 
   // Validate payment details based on payment method
@@ -42,7 +42,6 @@ class WithdrawalService {
       case "other":
         if (!paymentDetails.otherDetails) errors.push("Payment details are required");
         break;
-
       default:
         errors.push("Invalid payment method");
     }
@@ -54,13 +53,12 @@ class WithdrawalService {
   static async createWithdrawalRequest(freelancerId, requestData) {
     const { amount, paymentMethod, paymentDetails } = requestData;
 
-    // Validate payment details
     const validationErrors = this.validatePaymentDetails(paymentMethod, paymentDetails);
     if (validationErrors.length > 0) {
       throw new AppError(validationErrors.join(", "), httpCode.BAD_REQUEST);
     }
 
-    // Check if freelancer's wallet exists and has sufficient balance
+
     const wallet = await WalletModel.findOne({ freelancer: freelancerId });
     if (!wallet) {
       throw new AppError("Wallet not found", httpCode.NOT_FOUND);
@@ -70,7 +68,6 @@ class WithdrawalService {
       throw new AppError("Insufficient balance", httpCode.BAD_REQUEST);
     }
 
-    // Check for pending withdrawal requests
     const pendingRequests = await WithdrawalRequestModel.findOne({
       freelancer: freelancerId,
       status: "pending",
@@ -82,19 +79,19 @@ class WithdrawalService {
 
     // Calculate platform fee
     const platformFee = this.calculatePlatformFee(amount);
-    const finalAmount = amount - platformFee;
+    const freelancerWallet = await WalletModel.findOne({ freelancer: freelancerId });
 
     // Create withdrawal request
-    const withdrawalRequest = new WithdrawalRequestModel({
+    const withdrawalRequest =  WithdrawalRequestModel.create({
+      requestId: this.generateTransactionId(),
       freelancer: freelancerId,
-      amount: finalAmount,
+      amount:freelancerWallet.balance,
       requestedAmount: amount,
       platformFee,
       paymentMethod,
       paymentDetails,
     });
 
-    await withdrawalRequest.save();
     return withdrawalRequest;
   }
 
@@ -164,7 +161,7 @@ class WithdrawalService {
     const { adminNotes, paymentReferenceId } = approvalData;
 
     // Find withdrawal request
-    const withdrawalRequest = await WithdrawalRequestModel.findById(requestId)
+    const withdrawalRequest = await WithdrawalRequestModel.findOne({requestId})
       .populate("freelancer", "name email");
 
     if (!withdrawalRequest) {
@@ -238,7 +235,7 @@ class WithdrawalService {
     }
 
     // Find withdrawal request
-    const withdrawalRequest = await WithdrawalRequestModel.findById(requestId);
+    const withdrawalRequest = await WithdrawalRequestModel.findOne({requestId});
 
     if (!withdrawalRequest) {
       throw new AppError("Withdrawal request not found", httpCode.NOT_FOUND);
@@ -262,7 +259,7 @@ class WithdrawalService {
   // Cancel withdrawal request
   static async cancelWithdrawalRequest(requestId, freelancerId) {
     const withdrawalRequest = await WithdrawalRequestModel.findOne({
-      _id: requestId,
+      requestId,
       freelancer: freelancerId,
     });
 
