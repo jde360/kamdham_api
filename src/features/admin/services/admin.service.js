@@ -6,6 +6,7 @@ import {
   comparePassword,
   hashPassword,
 } from "../../../utils/password.config.js";
+import AdminWalletModel from "../../wallet/model/adminWallet.model.js";
 
 const adminService = {
   create: async (data) => {
@@ -18,14 +19,19 @@ const adminService = {
         );
       }
       // Check if admin already exists
-      const existAdmin = await adminService.getByEmail(userName);
+      const existAdmin = await adminService.getByUsername(userName);
       if (existAdmin) {
         throw new AppError("Username already exists", httpCode.BAD_REQUEST);
       }
       const hashedPassword = await hashPassword(password);
+      let wallet = await AdminModel.findOne().sort({ createdAt: -1 }).select('wallet');
+      if (!wallet) {
+        wallet = await AdminWalletModel.create({});
+      }
       const admin = await AdminModel.create({
         userName,
         password: hashedPassword,
+        wallet: wallet._id
       });
       if (!admin) {
         throw new AppError(
@@ -43,9 +49,9 @@ const adminService = {
     }
   },
 
-  getByEmail: async (email) => {
+  getByUsername: async (userName) => {
     try {
-      const admin = await AdminModel.findOne({ email });
+      const admin = await AdminModel.findOne({ userName: userName });
       return admin;
     } catch (error) {
       throw new AppError(error.message, httpCode.INTERNAL_SERVER_ERROR);
@@ -54,7 +60,7 @@ const adminService = {
 
   getById: async (id) => {
     try {
-      const admin = await AdminModel.findById(id).select("-password");
+      const admin = await AdminModel.findById(id).select("-password").populate('wallet');
       if (!admin) {
         throw new AppError("Admin not found", httpCode.NOT_FOUND);
       }
@@ -66,7 +72,7 @@ const adminService = {
 
   getAll: async () => {
     try {
-      const admins = await AdminModel.find({}).select("-password");
+      const admins = await AdminModel.find({}).select("-password").populate('wallet');
       return admins;
     } catch (error) {
       throw new AppError(error.message, httpCode.INTERNAL_SERVER_ERROR);

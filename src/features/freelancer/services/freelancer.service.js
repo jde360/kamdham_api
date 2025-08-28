@@ -4,6 +4,8 @@ import { httpCode } from "../../../utils/httpCode.js";
 import { generateToken } from "../../../utils/token.config.js";
 import { appConfig } from "../../../utils/appConfig.js";
 import jobApplicationService from "../../jobs/service/jobApplication.service.js";
+import WalletModel from "../../wallet/model/wallet.model.js";
+import walletService from "../../wallet/service/wallet.service.js";
 
 const freelancerService = {
   generateOTP: () => {
@@ -81,7 +83,7 @@ const freelancerService = {
         freelancer.phone,
         "freelancer"
       );
-      return token;
+      return { token, isRegistered: freelancer.isRegistered };
     } catch (error) {
       throw error;
     }
@@ -137,9 +139,10 @@ const freelancerService = {
       freelancer.state = state || freelancer.state;
       freelancer.city = city || freelancer.city;
       freelancer.isRegistered = true;
-
       await freelancer.save();
-
+      const wallet = await walletService.createWallet(freelancer._id);
+      freelancer.wallet = wallet._id;
+      await freelancer.save();
       return {
         name: freelancer.name,
         phone: freelancer.phone,
@@ -169,10 +172,16 @@ const freelancerService = {
   getFreelancerById: async (id) => {
     try {
       const result = await FreelancerModel.findById(id)
-        .populate("category", "name")
+        .populate({
+          path: "category",
+          select: "name",
+        }).populate({
+          path: "wallet",
+          select: "balance",
+        })
         .select(
-          "name email phone profession summary pricePerHr skills languages status image rating state city isRegistered"
-        );
+          "-isRegistered -status -createdAt -updatedAt"
+        )
 
       if (!result) {
         throw new AppError(`Freelancer not found`, httpCode.NOT_FOUND);

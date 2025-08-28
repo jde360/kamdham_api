@@ -1,0 +1,5017 @@
+{
+	"info": {
+		"_postman_id": "ee3e7781-7556-45b2-b2c7-c1d3096edeaf",
+		"name": "Kamdham",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "38091724",
+		"_collection_link": "https://de-360-flutter.postman.co/workspace/Team~62d16447-fa6d-4fe5-8664-d3f016a444f1/collection/37912689-ee3e7781-7556-45b2-b2c7-c1d3096edeaf?action=share&source=collection_link&creator=38091724"
+	},
+	"item": [
+		{
+			"name": "admin",
+			"item": [
+				{
+					"name": "freelancer-service",
+					"item": [
+						{
+							"name": "Get All Services (Admin)",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{adminToken}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/freelancer-services?status=all",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"freelancer-services"
+									],
+									"query": [
+										{
+											"key": "status",
+											"value": "all",
+											"description": "all, active, inactive, pending, suspended"
+										},
+										{
+											"key": "page",
+											"value": "1",
+											"disabled": true
+										},
+										{
+											"key": "limit",
+											"value": "10",
+											"disabled": true
+										}
+									]
+								},
+								"description": "Get all freelancer services for admin with all statuses"
+							},
+							"response": []
+						},
+						{
+							"name": "Get Service by ID (Admin)",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{adminToken}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/freelancer-services/{{service_id}}",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"freelancer-services",
+										"{{service_id}}"
+									]
+								},
+								"description": "Get detailed information about a specific service"
+							},
+							"response": []
+						},
+						{
+							"name": "Update Service Status",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{adminToken}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PATCH",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"status\": \"active\",\n  \"adminNotes\": \"Service approved after review\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/freelancer-services/{{service_id}}/status",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"freelancer-services",
+										"{{service_id}}",
+										"status"
+									]
+								},
+								"description": "Update service status (admin only). Status can be: active, inactive, suspended, pending"
+							},
+							"response": []
+						},
+						{
+							"name": "Suspend Service",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{adminToken}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PATCH",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"status\": \"suspended\",\n  \"adminNotes\": \"Service suspended due to policy violation\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/freelancer-services/{{service_id}}/status",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"freelancer-services",
+										"{{service_id}}",
+										"status"
+									]
+								},
+								"description": "Suspend a service (admin only)"
+							},
+							"response": []
+						},
+						{
+							"name": "Delete Service",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{adminToken}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/freelancer-services/{{service_id}}",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"freelancer-services",
+										"{{service_id}}"
+									]
+								},
+								"description": "Delete a service (admin only)"
+							},
+							"response": []
+						},
+						{
+							"name": "Search Services",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{adminToken}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/freelancer-services/search?keyword=dj&status=all",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"freelancer-services",
+										"search"
+									],
+									"query": [
+										{
+											"key": "keyword",
+											"value": "dj"
+										},
+										{
+											"key": "status",
+											"value": "all"
+										},
+										{
+											"key": "category",
+											"value": "{{category_id}}",
+											"disabled": true
+										}
+									]
+								},
+								"description": "Search services by keyword with admin privileges"
+							},
+							"response": []
+						},
+						{
+							"name": "Get Services Stats",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{adminToken}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/freelancer-services/stats",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"freelancer-services",
+										"stats"
+									]
+								},
+								"description": "Get statistics about freelancer services"
+							},
+							"response": []
+						}
+					],
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					]
+				},
+				{
+					"name": "auth",
+					"item": [
+						{
+							"name": "login",
+							"protocolProfileBehavior": {
+								"strictSSL": false,
+								"followRedirects": true
+							},
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"userName\":\"admin\",\n    \"password\":\"admin1234\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/admin/auth/login",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"admin",
+										"auth",
+										"login"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					]
+				},
+				{
+					"name": "services",
+					"item": [
+						{
+							"name": "get all services",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{freelancerToken}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{freelancer_token}}"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/freelancer-services",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"freelancer-services"
+									],
+									"query": [
+										{
+											"key": "status",
+											"value": "active",
+											"description": "active inactive suspend",
+											"disabled": true
+										},
+										{
+											"key": "keyword",
+											"value": "dj",
+											"description": "dj",
+											"disabled": true
+										}
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "get all services",
+									"originalRequest": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Authorization",
+												"value": "Bearer {{freelancer_token}}"
+											}
+										],
+										"url": {
+											"raw": "{{baseUrl}}/freelancer-services?status=active&keyword=dj",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"freelancer-services"
+											],
+											"query": [
+												{
+													"key": "status",
+													"value": "active",
+													"description": "active inactive suspend"
+												},
+												{
+													"key": "keyword",
+													"value": "dj",
+													"description": "dj"
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": null,
+									"header": [
+										{
+											"key": "X-Powered-By",
+											"value": "Express"
+										},
+										{
+											"key": "Access-Control-Allow-Origin",
+											"value": "*"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8"
+										},
+										{
+											"key": "Content-Length",
+											"value": "83"
+										},
+										{
+											"key": "ETag",
+											"value": "W/\"53-7fLLcx+c8i2xrSVP0JRKK+omDD4\""
+										},
+										{
+											"key": "Date",
+											"value": "Mon, 25 Aug 2025 10:56:08 GMT"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										},
+										{
+											"key": "Keep-Alive",
+											"value": "timeout=5"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"status\": \"success\",\n    \"message\": \"Freelancer services fetched successfully\",\n    \"data\": []\n}"
+								}
+							]
+						},
+						{
+							"name": "create services",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{freelancer}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"title\":\"Dj Night\",\n    \"description\":\"One night dj programe with 100 people.\",\n    \"price\":20000,\n    \"duration\":60,\n    \"category\":\"689dd21d16c693d4cffe25db\",\n    \"images\":[],\n    \"skills\":[\"dj\",\"light\",\"cocktail\"],\n    \"availability\":[\"Monday\",\"Tuesday\",\"Thursday\"],\n    \"location\":\"Kolkata\",\n    \"exprience\":2\n\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/freelancer-services",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"freelancer-services"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "create service",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"title\":\"Dj Night\",\n    \"description\":\"One night dj programe with 100 people.\",\n    \"price\":20000,\n    \"duration\":60,\n    \"category\":\"689dd21d16c693d4cffe25db\",\n    \"images\":[],\n    \"skills\":[\"dj\",\"light\",\"cocktail\"],\n    \"availability\":[\"Monday\",\"Tuesday\",\"Thursday\"],\n    \"location\":\"Kolkata\",\n    \"exprience\":2\n\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/freelancer-services",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"freelancer-services"
+											]
+										}
+									},
+									"status": "Created",
+									"code": 201,
+									"_postman_previewlanguage": null,
+									"header": [
+										{
+											"key": "X-Powered-By",
+											"value": "Express"
+										},
+										{
+											"key": "Access-Control-Allow-Origin",
+											"value": "*"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8"
+										},
+										{
+											"key": "Content-Length",
+											"value": "519"
+										},
+										{
+											"key": "ETag",
+											"value": "W/\"207-W70JDNCngYpm3i18Jvb+gYeupYY\""
+										},
+										{
+											"key": "Date",
+											"value": "Mon, 25 Aug 2025 11:04:40 GMT"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										},
+										{
+											"key": "Keep-Alive",
+											"value": "timeout=5"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"status\": \"success\",\n    \"message\": \"Freelancer service created successfully\",\n    \"data\": {\n        \"title\": \"Dj Night\",\n        \"description\": \"One night dj programe with 100 people.\",\n        \"freelancer\": \"68a5a7ce2188730d7a4eb91f\",\n        \"price\": 20000,\n        \"duration\": 60,\n        \"category\": \"689dd21d16c693d4cffe25db\",\n        \"images\": [],\n        \"skills\": [\n            \"dj\",\n            \"light\",\n            \"cocktail\"\n        ],\n        \"availability\": [\n            \"Monday\",\n            \"Tuesday\",\n            \"Thursday\"\n        ],\n        \"status\": \"active\",\n        \"location\": \"Kolkata\",\n        \"exprience\": 2,\n        \"_id\": \"68ac4348cc8b114c5d322e11\",\n        \"createdAt\": \"2025-08-25T11:04:40.520Z\",\n        \"updatedAt\": \"2025-08-25T11:04:40.520Z\"\n    }\n}"
+								}
+							]
+						}
+					]
+				}
+			],
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			]
+		},
+		{
+			"name": "service-applications",
+			"item": [
+				{
+					"name": "Apply for Service [User]",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{userToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"serviceId\": \"{{service_id}}\",\n  \"paymentType\": \"full\",\n  \"bookingAmount\": 25000,\n  \"scheduledDate\": \"2025-09-15\",\n  \"scheduledTime\": \"18:00\",\n  \"additionalNotes\": \"Need setup 2 hours before event. Venue is outdoor.\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/service-applications/apply",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"service-applications",
+								"apply"
+							]
+						},
+						"description": "Apply for a freelancer service with full payment or advance"
+					},
+					"response": []
+				},
+				{
+					"name": "Get My Applications [User]",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{userToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/service-applications/my-applications?status=all&page=1&limit=10",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"service-applications",
+								"my-applications"
+							],
+							"query": [
+								{
+									"key": "status",
+									"value": "all",
+									"description": "pending, accepted, rejected, withdrawn, hired, completed, all"
+								},
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "limit",
+									"value": "10"
+								}
+							]
+						},
+						"description": "Get all applications made by the user"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Client Application Stats [User]",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{userToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/service-applications/my-applications/stats",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"service-applications",
+								"my-applications",
+								"stats"
+							]
+						},
+						"description": "Get application statistics for the client"
+					},
+					"response": []
+				},
+				{
+					"name": "Withdraw Application [User]",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{userToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/service-applications/{{application_id}}/withdraw",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"service-applications",
+								"{{application_id}}",
+								"withdraw"
+							]
+						},
+						"description": "Withdraw a pending or accepted application"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Freelancer Applications [Freelancer]",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{freelancerToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/service-applications/freelancer/applications?status=pending&page=1&limit=10",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"service-applications",
+								"freelancer",
+								"applications"
+							],
+							"query": [
+								{
+									"key": "status",
+									"value": "pending",
+									"description": "pending, accepted, rejected, withdrawn, hired, completed, all"
+								},
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "limit",
+									"value": "10"
+								}
+							]
+						},
+						"description": "Get all applications for freelancer's services"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Freelancer Application Stats [Freelancer]",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{freelancerToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/service-applications/freelancer/stats",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"service-applications",
+								"freelancer",
+								"stats"
+							]
+						},
+						"description": "Get application statistics for freelancer"
+					},
+					"response": []
+				},
+				{
+					"name": "Accept Application [Freelancer]",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{freelancerToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"status\": \"accepted\",\n  \"freelancerNotes\": \"Application looks good. I'll contact you soon to discuss details.\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/service-applications/{{application_id}}/status",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"service-applications",
+								"{{application_id}}",
+								"status"
+							]
+						},
+						"description": "Accept a pending application"
+					},
+					"response": []
+				},
+				{
+					"name": "Hire Client [Freelancer]",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{freelancerToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"status\": \"hired\",\n  \"freelancerNotes\": \"Perfect! Looking forward to providing excellent service for your event.\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/service-applications/{{application_id}}/status",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"service-applications",
+								"{{application_id}}",
+								"status"
+							]
+						},
+						"description": "Hire an accepted client"
+					},
+					"response": []
+				},
+				{
+					"name": "Reject Application [Freelancer]",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{freelancerToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"status\": \"rejected\",\n  \"freelancerNotes\": \"Unfortunately, I'm not available on that date. Please check other freelancers.\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/service-applications/{{application_id}}/status",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"service-applications",
+								"{{application_id}}",
+								"status"
+							]
+						},
+						"description": "Reject an application"
+					},
+					"response": []
+				},
+				{
+					"name": "Complete Service [Freelancer]",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{freelancerToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"completionNotes\": \"Service completed successfully. Event was amazing and everyone enjoyed the music!\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/service-applications/{{application_id}}/complete",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"service-applications",
+								"{{application_id}}",
+								"complete"
+							]
+						},
+						"description": "Mark a hired service as completed"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Application by ID",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{userToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/service-applications/{{application_id}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"service-applications",
+								"{{application_id}}"
+							]
+						},
+						"description": "Get detailed information about a specific application"
+					},
+					"response": []
+				},
+				{
+					"name": "Get All Applications [Admin]",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{adminToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/service-applications?status=all&page=1&limit=20&sortBy=createdAt&sortOrder=desc",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"service-applications"
+							],
+							"query": [
+								{
+									"key": "status",
+									"value": "all"
+								},
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "limit",
+									"value": "20"
+								},
+								{
+									"key": "sortBy",
+									"value": "createdAt"
+								},
+								{
+									"key": "sortOrder",
+									"value": "desc"
+								}
+							]
+						},
+						"description": "Get all service applications (Admin view)"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Application Analytics [Admin]",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{adminToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/service-applications/admin/analytics?startDate=2025-01-01&endDate=2025-12-31",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"service-applications",
+								"admin",
+								"analytics"
+							],
+							"query": [
+								{
+									"key": "startDate",
+									"value": "2025-01-01",
+									"disabled": true
+								},
+								{
+									"key": "endDate",
+									"value": "2025-12-31",
+									"disabled": true
+								}
+							]
+						},
+						"description": "Get comprehensive analytics about service applications"
+					},
+					"response": []
+				}
+			],
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			]
+		},
+		{
+			"name": "categories",
+			"item": [
+				{
+					"name": "add category",
+					"protocolProfileBehavior": {
+						"strictSSL": false,
+						"followRedirects": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODljOGQ0NTA1ODVjMDVlZTM2N2UwOGEiLCJlbWFpbCI6ImFkbWluIiwidXNlclR5cGUiOiJhZG1pbiIsImlhdCI6MTc1NTQ5OTY5NCwiZXhwIjoxNzg2NjAzNjk0fQ.C6S8zejTzPK4_ZZRnPd_frl2RW2WZB58xpxt70jR9fo",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/category",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"category"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get all category[admin]",
+					"protocolProfileBehavior": {
+						"strictSSL": false,
+						"followRedirects": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODljOGQ0NTA1ODVjMDVlZTM2N2UwOGEiLCJlbWFpbCI6ImFkbWluIiwidXNlclR5cGUiOiJhZG1pbiIsImlhdCI6MTc1NTQ5OTY5NCwiZXhwIjoxNzg2NjAzNjk0fQ.C6S8zejTzPK4_ZZRnPd_frl2RW2WZB58xpxt70jR9fo",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/category",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"category"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get all active category",
+					"protocolProfileBehavior": {
+						"strictSSL": false,
+						"followRedirects": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODljOGQ0NTA1ODVjMDVlZTM2N2UwOGEiLCJlbWFpbCI6ImFkbWluIiwidXNlclR5cGUiOiJhZG1pbiIsImlhdCI6MTc1NTQ5OTY5NCwiZXhwIjoxNzg2NjAzNjk0fQ.C6S8zejTzPK4_ZZRnPd_frl2RW2WZB58xpxt70jR9fo",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/category/active",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"category",
+								"active"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get all category ID",
+					"protocolProfileBehavior": {
+						"strictSSL": false,
+						"followRedirects": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODljOGQ0NTA1ODVjMDVlZTM2N2UwOGEiLCJlbWFpbCI6ImFkbWluIiwidXNlclR5cGUiOiJhZG1pbiIsImlhdCI6MTc1NTQ5OTY5NCwiZXhwIjoxNzg2NjAzNjk0fQ.C6S8zejTzPK4_ZZRnPd_frl2RW2WZB58xpxt70jR9fo",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/category/689dd21d16c693d4cffe25db",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"category",
+								"689dd21d16c693d4cffe25db"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update",
+					"protocolProfileBehavior": {
+						"strictSSL": false,
+						"followRedirects": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODljOGQ0NTA1ODVjMDVlZTM2N2UwOGEiLCJlbWFpbCI6ImFkbWluIiwidXNlclR5cGUiOiJhZG1pbiIsImlhdCI6MTc1NTQ5OTY5NCwiZXhwIjoxNzg2NjAzNjk0fQ.C6S8zejTzPK4_ZZRnPd_frl2RW2WZB58xpxt70jR9fo",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"status\":\"active\"\n}",
+							"options": {
+								"raw": {
+									"language": "text"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/category/689dd21d16c693d4cffe25db",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"category",
+								"689dd21d16c693d4cffe25db"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "search category[admin]",
+					"protocolProfileBehavior": {
+						"strictSSL": false,
+						"followRedirects": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODljOGQ0NTA1ODVjMDVlZTM2N2UwOGEiLCJlbWFpbCI6ImFkbWluIiwidXNlclR5cGUiOiJhZG1pbiIsImlhdCI6MTc1NTQ5OTY5NCwiZXhwIjoxNzg2NjAzNjk0fQ.C6S8zejTzPK4_ZZRnPd_frl2RW2WZB58xpxt70jR9fo",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/category/search?name=dj",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"category",
+								"search"
+							],
+							"query": [
+								{
+									"key": "name",
+									"value": "dj"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "search category",
+					"protocolProfileBehavior": {
+						"strictSSL": false,
+						"followRedirects": true
+					},
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/category/activeSearch?name=dj",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"category",
+								"activeSearch"
+							],
+							"query": [
+								{
+									"key": "name",
+									"value": "dj"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			]
+		},
+		{
+			"name": "user",
+			"item": [
+				{
+					"name": "Send otp",
+					"protocolProfileBehavior": {
+						"strictSSL": false,
+						"followRedirects": true
+					},
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"phone\":\"1111111111\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/user/send-otp",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"user",
+								"send-otp"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Send otp",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"phone\":\"1111111111\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/user/send-otp",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"user",
+										"send-otp"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "120"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"78-xuhY+MXn8K3QzVztUaEionE3ZrA\""
+								},
+								{
+									"key": "Date",
+									"value": "Mon, 18 Aug 2025 15:35:07 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"status\": \"success\",\n    \"message\": \"OTP sent successfully\",\n    \"data\": {\n        \"isRegistered\": false,\n        \"phone\": \"1111111111\",\n        \"otp\": \"778972\"\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "verify OTP",
+					"protocolProfileBehavior": {
+						"strictSSL": false,
+						"followRedirects": true
+					},
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"phone\":\"1111111111\",\n    \"otp\":\"779657\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/user/verify-otp",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"user",
+								"verify-otp"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "verify OTP",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"phone\":\"1111111111\",\n    \"otp\":\"133851\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/user/verify-otp",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"user",
+										"verify-otp"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "70"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"46-NsXT2z9dcN+PIkB/yBVTtXdi3S0\""
+								},
+								{
+									"key": "Date",
+									"value": "Mon, 18 Aug 2025 15:35:21 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"status\": \"success\",\n    \"message\": \"OTP verified successfully\",\n    \"data\": null\n}"
+						}
+					]
+				},
+				{
+					"name": "registration",
+					"protocolProfileBehavior": {
+						"strictSSL": false,
+						"followRedirects": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{userToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\":\"jayanta mahato\",\n    \"email\":\"jayanta@jayanta.com\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/user/register",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"user",
+								"register"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "registration",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"name\":\"jayanta mahato\",\n    \"email\":\"jayanta@jayanta.com\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/user/register",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"user",
+										"register"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "208"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"d0-KnKnVHsNPTmonfndkqDI1w6aZlY\""
+								},
+								{
+									"key": "Date",
+									"value": "Mon, 18 Aug 2025 15:38:34 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"status\": \"success\",\n    \"message\": \"User registered successfully\",\n    \"data\": {\n        \"name\": \"jayanta mahato\",\n        \"phone\": \"1111111111\",\n        \"email\": \"jayanta@jayanta.com\",\n        \"image\": \"https://ik.imagekit.io/fqbwqlzwt/kamdham/noImage.png\"\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "getProfile",
+					"protocolProfileBehavior": {
+						"strictSSL": false,
+						"followRedirects": true,
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{userToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\":\"jayanta mahato\",\n    \"email\":\"jayanta@jayanta.com\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/user/",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"user",
+								""
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "getProfile",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/user/",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"user",
+										""
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "276"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"114-0NaUjAAHK9l7MCa8z5y0vmt8Wlk\""
+								},
+								{
+									"key": "Date",
+									"value": "Mon, 18 Aug 2025 15:38:41 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"status\": \"success\",\n    \"message\": \"User fetched successfully\",\n    \"data\": {\n        \"_id\": \"68a3482b6f7baddeaefbc52b\",\n        \"name\": \"jayanta mahato\",\n        \"phone\": \"1111111111\",\n        \"isRegistered\": true,\n        \"image\": \"https://ik.imagekit.io/fqbwqlzwt/kamdham/noImage.png\",\n        \"status\": \"active\",\n        \"email\": \"jayanta@jayanta.com\"\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "update",
+					"protocolProfileBehavior": {
+						"strictSSL": false,
+						"followRedirects": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{userToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\":\"jayanta mahato edited\",\n    \"email\":\"jayanta@jayanta.com\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/user/",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"user",
+								""
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "getProfile Copy",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"name\":\"jayanta mahato edited\",\n    \"email\":\"jayanta@jayanta.com\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/user/",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"user",
+										""
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "379"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"17b-8TxzY5ilcN3DTbhc6puq3rhohF4\""
+								},
+								{
+									"key": "Date",
+									"value": "Mon, 18 Aug 2025 15:31:10 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"status\": \"success\",\n    \"message\": \"User updated successfully\",\n    \"data\": {\n        \"_id\": \"68a30fbaf8b035c92cef3ae3\",\n        \"name\": \"jayanta mahato edited\",\n        \"phone\": \"1111111111\",\n        \"image\": \"https://ik.imagekit.io/fqbwqlzwt/kamdham/noImage.png\",\n        \"userType\": \"user\",\n        \"status\": \"active\",\n        \"createdAt\": \"2025-08-18T11:34:18.732Z\",\n        \"updatedAt\": \"2025-08-18T15:31:10.057Z\",\n        \"isRegistered\": true,\n        \"email\": \"jayanta@jayanta.com\"\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "get user count",
+					"protocolProfileBehavior": {
+						"strictSSL": false,
+						"followRedirects": true,
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{adminToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\":\"jayanta mahato\",\n    \"email\":\"jayanta@jayanta.com\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/user/stats",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"user",
+								"stats"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "get user count",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/user/stats",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"user",
+										"stats"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "73"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"49-ouXyeza6rnW2W3i0jZcwNeWouzg\""
+								},
+								{
+									"key": "Date",
+									"value": "Mon, 18 Aug 2025 15:34:14 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"status\": \"success\",\n    \"message\": \"User count fetched successfully\",\n    \"data\": 1\n}"
+						}
+					]
+				},
+				{
+					"name": "search user",
+					"protocolProfileBehavior": {
+						"strictSSL": false,
+						"followRedirects": true,
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{adminToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\":\"jayanta mahato\",\n    \"email\":\"jayanta@jayanta.com\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/user/search?name=jayanta",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"user",
+								"search"
+							],
+							"query": [
+								{
+									"key": "name",
+									"value": "jayanta"
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "search user",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/user/search?name=jayanta",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"user",
+										"search"
+									],
+									"query": [
+										{
+											"key": "name",
+											"value": "jayanta"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "383"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"17f-Gq93X8RE6x8gZRdfvwwxth1Pj/Q\""
+								},
+								{
+									"key": "Date",
+									"value": "Mon, 18 Aug 2025 15:34:20 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"status\": \"success\",\n    \"message\": \"Users searched successfully\",\n    \"data\": [\n        {\n            \"_id\": \"68a30fbaf8b035c92cef3ae3\",\n            \"name\": \"jayanta mahato edited\",\n            \"phone\": \"1111111111\",\n            \"image\": \"https://ik.imagekit.io/fqbwqlzwt/kamdham/noImage.png\",\n            \"userType\": \"user\",\n            \"status\": \"active\",\n            \"createdAt\": \"2025-08-18T11:34:18.732Z\",\n            \"updatedAt\": \"2025-08-18T15:31:10.057Z\",\n            \"isRegistered\": true,\n            \"email\": \"jayanta@jayanta.com\"\n        }\n    ]\n}"
+						}
+					]
+				},
+				{
+					"name": "suspend",
+					"protocolProfileBehavior": {
+						"strictSSL": false,
+						"followRedirects": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{adminToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"userId\":\"68a30fbaf8b035c92cef3ae3\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/user/suspend",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"user",
+								"suspend"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "suspend",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"userId\":\"68a30fbaf8b035c92cef3ae3\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/user/suspend",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"user",
+										"suspend"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "383"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"17f-2Cd/5reMswLLiRv0SQa+A+rA6iY\""
+								},
+								{
+									"key": "Date",
+									"value": "Mon, 18 Aug 2025 15:34:27 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"status\": \"success\",\n    \"message\": \"User deactivated successfully\",\n    \"data\": {\n        \"_id\": \"68a30fbaf8b035c92cef3ae3\",\n        \"name\": \"jayanta mahato edited\",\n        \"phone\": \"1111111111\",\n        \"image\": \"https://ik.imagekit.io/fqbwqlzwt/kamdham/noImage.png\",\n        \"userType\": \"user\",\n        \"status\": \"active\",\n        \"createdAt\": \"2025-08-18T11:34:18.732Z\",\n        \"updatedAt\": \"2025-08-18T15:31:10.057Z\",\n        \"isRegistered\": true,\n        \"email\": \"jayanta@jayanta.com\"\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "resume",
+					"protocolProfileBehavior": {
+						"strictSSL": false,
+						"followRedirects": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{adminToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"userId\":\"68a30fbaf8b035c92cef3ae3\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/user/resume",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"user",
+								"resume"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "resume",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"userId\":\"68a30fbaf8b035c92cef3ae3\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/user/resume",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"user",
+										"resume"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "384"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"180-Khf63j1pwo3/xb2kZYIMqWckouY\""
+								},
+								{
+									"key": "Date",
+									"value": "Mon, 18 Aug 2025 15:34:34 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"status\": \"success\",\n    \"message\": \"User activated successfully\",\n    \"data\": {\n        \"_id\": \"68a30fbaf8b035c92cef3ae3\",\n        \"name\": \"jayanta mahato edited\",\n        \"phone\": \"1111111111\",\n        \"image\": \"https://ik.imagekit.io/fqbwqlzwt/kamdham/noImage.png\",\n        \"userType\": \"user\",\n        \"status\": \"suspended\",\n        \"createdAt\": \"2025-08-18T11:34:18.732Z\",\n        \"updatedAt\": \"2025-08-18T15:34:27.058Z\",\n        \"isRegistered\": true,\n        \"email\": \"jayanta@jayanta.com\"\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "delete",
+					"protocolProfileBehavior": {
+						"strictSSL": false,
+						"followRedirects": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{adminToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"userId\":\"68a30fbaf8b035c92cef3ae3\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/user/68a30fbaf8b035c92cef3ae3",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"user",
+								"68a30fbaf8b035c92cef3ae3"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "resume Copy",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"userId\":\"68a30fbaf8b035c92cef3ae3\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/user/68a30fbaf8b035c92cef3ae3",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"user",
+										"68a30fbaf8b035c92cef3ae3"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "379"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"17b-kDP0Mr6zFkvTHmBqI/5K/0krbro\""
+								},
+								{
+									"key": "Date",
+									"value": "Mon, 18 Aug 2025 15:34:48 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"status\": \"success\",\n    \"message\": \"User deleted successfully\",\n    \"data\": {\n        \"_id\": \"68a30fbaf8b035c92cef3ae3\",\n        \"name\": \"jayanta mahato edited\",\n        \"phone\": \"1111111111\",\n        \"image\": \"https://ik.imagekit.io/fqbwqlzwt/kamdham/noImage.png\",\n        \"userType\": \"user\",\n        \"status\": \"active\",\n        \"createdAt\": \"2025-08-18T11:34:18.732Z\",\n        \"updatedAt\": \"2025-08-18T15:34:34.598Z\",\n        \"isRegistered\": true,\n        \"email\": \"jayanta@jayanta.com\"\n    }\n}"
+						}
+					]
+				}
+			],
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			]
+		},
+		{
+			"name": "jobs",
+			"item": [
+				{
+					"name": "create job[user]",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{userToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n     \"title\":\"Need DJ Player\",\n        \"description\":\"Need a profesional dj for one night\",\n        \"duration\":60,\n        \"category\":\"689dd21d16c693d4cffe25db\",\n        \"requirements\":[\n            \"Minumum 1 yr exprience\",\n            \"Good behabiour\",\n            \"non alcholoic\"\n        ],\n        \"city\":\"mumbai\",\n        \"state\":\"maharasra\",\n        \"budget\":20000,\n        \"deadLine\":\"24/07/2026\",\n        \"venue\":\"exotic park,G.K. Road\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/job",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"job"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "create job",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n     \"title\":\"Need DJ\",\n        \"description\":\"Need a profesional dj for one night\",\n        \"duration\":60,\n        \"requirements\":[\n            \"Minumum 1 yr exprience\",\n            \"Good behabiour\",\n            \"non alcholoic\"\n        ],\n        \"city\":\"mumbai\",\n        \"state\":\"maharasra\",\n        \"budget\":20000,\n        \"deadLine\":\"24/07/2026\",\n        \"venue\":\"exotic park,G.K. Road\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/job",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"job"
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "532"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"214-5cLuH9+KgjKCrqx4xVaIVqFKcws\""
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 19 Aug 2025 16:16:12 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"status\": \"success\",\n    \"message\": \"Job created\",\n    \"data\": {\n        \"title\": \"Need DJ\",\n        \"description\": \"Need a profesional dj for one night\",\n        \"requirements\": [\n            \"Minumum 1 yr exprience\",\n            \"Good behabiour\",\n            \"non alcholoic\"\n        ],\n        \"duration\": 60,\n        \"city\": \"mumbai\",\n        \"state\": \"maharasra\",\n        \"venue\": \"exotic park,G.K. Road\",\n        \"applicant\": [],\n        \"shortListed\": [],\n        \"postedBy\": \"68a3482b6f7baddeaefbc52b\",\n        \"deadLine\": \"2025-08-19T16:16:12.844Z\",\n        \"budget\": 20000,\n        \"status\": \"active\",\n        \"_id\": \"68a4a34c60a873c39e087629\",\n        \"createdAt\": \"2025-08-19T16:16:12.852Z\",\n        \"updatedAt\": \"2025-08-19T16:16:12.852Z\"\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "get all jobs[admin]",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{adminToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n     \"title\":\"Need DJ\",\n        \"description\":\"Need a profesional dj for one night\",\n        \"duration\":60,\n        \"requirements\":[\n            \"Minumum 1 yr exprience\",\n            \"Good behabiour\",\n            \"non alcholoic\"\n        ],\n        \"city\":\"mumbai\",\n        \"state\":\"maharasra\",\n        \"budget\":20000,\n        \"deadLine\":\"24/07/2026\",\n        \"venue\":\"exotic park,G.K. Road\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/job",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"job"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "get all jobs",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/job",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"job"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "618"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"26a-ieaItBHkD/lcZDDnlocZ2imJx8I\""
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 19 Aug 2025 16:16:29 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"status\": \"success\",\n    \"message\": \"Jobs fetched\",\n    \"data\": [\n        {\n            \"_id\": \"68a4a34c60a873c39e087629\",\n            \"title\": \"Need DJ\",\n            \"description\": \"Need a profesional dj for one night\",\n            \"requirements\": [\n                \"Minumum 1 yr exprience\",\n                \"Good behabiour\",\n                \"non alcholoic\"\n            ],\n            \"duration\": 60,\n            \"city\": \"mumbai\",\n            \"state\": \"maharasra\",\n            \"venue\": \"exotic park,G.K. Road\",\n            \"applicant\": [],\n            \"shortListed\": [],\n            \"postedBy\": {\n                \"_id\": \"68a3482b6f7baddeaefbc52b\",\n                \"name\": \"jayanta mahato\",\n                \"phone\": \"1111111111\",\n                \"email\": \"jayanta@jayanta.com\"\n            },\n            \"deadLine\": \"2025-08-19T16:16:12.844Z\",\n            \"budget\": 20000,\n            \"status\": \"active\",\n            \"createdAt\": \"2025-08-19T16:16:12.852Z\",\n            \"updatedAt\": \"2025-08-19T16:16:12.852Z\"\n        }\n    ]\n}"
+						}
+					]
+				},
+				{
+					"name": "job by id",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{adminToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n     \"title\":\"Need DJ\",\n        \"description\":\"Need a profesional dj for one night\",\n        \"duration\":60,\n        \"requirements\":[\n            \"Minumum 1 yr exprience\",\n            \"Good behabiour\",\n            \"non alcholoic\"\n        ],\n        \"city\":\"mumbai\",\n        \"state\":\"maharasra\",\n        \"budget\":20000,\n        \"deadLine\":\"24/07/2026\",\n        \"venue\":\"exotic park,G.K. Road\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/job/68a4a34c60a873c39e087629",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"job",
+								"68a4a34c60a873c39e087629"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "get jobs by id",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/job/68a4a34c60a873c39e087629",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"job",
+										"68a4a34c60a873c39e087629"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "532"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"214-EhQN7ZimhdseOj8/+D1AL4rLhok\""
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 19 Aug 2025 16:52:04 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"status\": \"success\",\n    \"message\": \"Job fetched\",\n    \"data\": {\n        \"_id\": \"68a4a34c60a873c39e087629\",\n        \"title\": \"Need DJ\",\n        \"description\": \"Need a profesional dj for one night\",\n        \"requirements\": [\n            \"Minumum 1 yr exprience\",\n            \"Good behabiour\",\n            \"non alcholoic\"\n        ],\n        \"duration\": 60,\n        \"city\": \"mumbai\",\n        \"state\": \"maharasra\",\n        \"venue\": \"exotic park,G.K. Road\",\n        \"applicant\": [],\n        \"shortListed\": [],\n        \"postedBy\": \"68a3482b6f7baddeaefbc52b\",\n        \"deadLine\": \"2025-08-19T16:16:12.844Z\",\n        \"budget\": 20000,\n        \"status\": \"active\",\n        \"createdAt\": \"2025-08-19T16:16:12.852Z\",\n        \"updatedAt\": \"2025-08-19T16:16:12.852Z\"\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "jobs by user",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{adminToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n     \"title\":\"Need DJ\",\n        \"description\":\"Need a profesional dj for one night\",\n        \"duration\":60,\n        \"requirements\":[\n            \"Minumum 1 yr exprience\",\n            \"Good behabiour\",\n            \"non alcholoic\"\n        ],\n        \"city\":\"mumbai\",\n        \"state\":\"maharasra\",\n        \"budget\":20000,\n        \"deadLine\":\"24/07/2026\",\n        \"venue\":\"exotic park,G.K. Road\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/job/user/68a3482b6f7baddeaefbc52b",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"job",
+								"user",
+								"68a3482b6f7baddeaefbc52b"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get by state",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{adminToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n     \"title\":\"Need DJ\",\n        \"description\":\"Need a profesional dj for one night\",\n        \"duration\":60,\n        \"requirements\":[\n            \"Minumum 1 yr exprience\",\n            \"Good behabiour\",\n            \"non alcholoic\"\n        ],\n        \"city\":\"mumbai\",\n        \"state\":\"maharasra\",\n        \"budget\":20000,\n        \"deadLine\":\"24/07/2026\",\n        \"venue\":\"exotic park,G.K. Road\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/job/state/maharasra",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"job",
+								"state",
+								"maharasra"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get by city",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{adminToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n     \"title\":\"Need DJ\",\n        \"description\":\"Need a profesional dj for one night\",\n        \"duration\":60,\n        \"requirements\":[\n            \"Minumum 1 yr exprience\",\n            \"Good behabiour\",\n            \"non alcholoic\"\n        ],\n        \"city\":\"mumbai\",\n        \"state\":\"maharasra\",\n        \"budget\":20000,\n        \"deadLine\":\"24/07/2026\",\n        \"venue\":\"exotic park,G.K. Road\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/job/city/kolkata",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"job",
+								"city",
+								"kolkata"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "search jobs",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{adminToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n     \"title\":\"Need DJ\",\n        \"description\":\"Need a profesional dj for one night\",\n        \"duration\":60,\n        \"requirements\":[\n            \"Minumum 1 yr exprience\",\n            \"Good behabiour\",\n            \"non alcholoic\"\n        ],\n        \"city\":\"mumbai\",\n        \"state\":\"maharasra\",\n        \"budget\":20000,\n        \"deadLine\":\"24/07/2026\",\n        \"venue\":\"exotic park,G.K. Road\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/job/search?title=dj",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"job",
+								"search"
+							],
+							"query": [
+								{
+									"key": "title",
+									"value": "dj"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update job",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{adminToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n     \"status\":\"suspended\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/job/68a4a34c60a873c39e087629",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"job",
+								"68a4a34c60a873c39e087629"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "delete",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n     \"title\":\"Need DJ\",\n        \"description\":\"Need a profesional dj for one night\",\n        \"duration\":60,\n        \"requirements\":[\n            \"Minumum 1 yr exprience\",\n            \"Good behabiour\",\n            \"non alcholoic\"\n        ],\n        \"city\":\"mumbai\",\n        \"state\":\"maharasra\",\n        \"budget\":20000,\n        \"deadLine\":\"24/07/2026\",\n        \"venue\":\"exotic park,G.K. Road\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/job/68a49e8cb609119634f65483",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"job",
+										"68a49e8cb609119634f65483"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "532"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"214-lHZvt/7VCSZB4ko3eJAB2FkT7Mc\""
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 19 Aug 2025 16:15:55 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"status\": \"success\",\n    \"message\": \"Job deleted\",\n    \"data\": {\n        \"status\": \"active\",\n        \"_id\": \"68a49e8cb609119634f65483\",\n        \"title\": \"Need DJ\",\n        \"description\": \"Need a profesional dj for one night\",\n        \"requirements\": [\n            \"Minumum 1 yr exprience\",\n            \"Good behabiour\",\n            \"non alcholoic\"\n        ],\n        \"duration\": 60,\n        \"city\": \"mumbai\",\n        \"state\": \"maharasra\",\n        \"venue\": \"exotic park,G.K. Road\",\n        \"applicant\": [],\n        \"shortListed\": [],\n        \"postedBy\": \"68a3482b6f7baddeaefbc52b\",\n        \"deadLine\": \"2025-08-19T15:55:56.977Z\",\n        \"budget\": 20000,\n        \"createdAt\": \"2025-08-19T15:55:56.988Z\",\n        \"updatedAt\": \"2025-08-19T15:55:56.988Z\"\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "Apply to Job[freelancer]",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"if (pm.response.code === 201) {",
+									"    const response = pm.response.json();",
+									"    if (response.data._id) {",
+									"        pm.collectionVariables.set('application_id', response.data._id);",
+									"        console.log('Application ID saved:', response.data._id);",
+									"    }",
+									"}"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{freelancerToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{freelancer_token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"jobId\": \"68a4b105556715edb9caebd9\",\n  \"proposedRate\": 21000\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/job/apply",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"job",
+								"apply"
+							]
+						},
+						"description": "Apply to a job with proposed rate"
+					},
+					"response": []
+				},
+				{
+					"name": "Get My Applications[freelancer]",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{freelancerToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{freelancer_token}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/job/applications/my?page=1&limit=10",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"job",
+								"applications",
+								"my"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "limit",
+									"value": "10"
+								},
+								{
+									"key": "status",
+									"value": "applied",
+									"disabled": true
+								}
+							]
+						},
+						"description": "Get freelancer's job applications"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Application Stats[freelancer]",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{freelancerToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{freelancer_token}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/job/applications/stats",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"job",
+								"applications",
+								"stats"
+							]
+						},
+						"description": "Get freelancer's application statistics"
+					},
+					"response": [
+						{
+							"name": "Get Application Stats",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{freelancer_token}}"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/job/applications/stats",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"job",
+										"applications",
+										"stats"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "370"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"172-8JugUqlgM+87lU/LoM8UGvHLw0g\""
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 20 Aug 2025 08:59:02 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"status\": \"success\",\n    \"message\": \"Application statistics fetched successfully\",\n    \"data\": {\n        \"total\": 1,\n        \"applied\": 0,\n        \"shortlisted\": 0,\n        \"hired\": 0,\n        \"rejected\": 0,\n        \"withdrawn\": 1,\n        \"hireRate\": \"0.00\",\n        \"shortlistRate\": \"0.00\",\n        \"responseRate\": \"0.00\",\n        \"recentActivity\": [\n            {\n                \"jobTitle\": \"Unknown Job\",\n                \"status\": \"withdrawn\",\n                \"appliedAt\": \"2025-08-20T08:45:42.879Z\",\n                \"lastUpdated\": \"2025-08-20T08:58:40.103Z\"\n            }\n        ]\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "Withdraw Application[freelancer]",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{freelancerToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{freelancer_token}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/job/applications/68a58b366113ba1524d78fb7/withdraw",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"job",
+								"applications",
+								"68a58b366113ba1524d78fb7",
+								"withdraw"
+							]
+						},
+						"description": "Withdraw job application"
+					},
+					"response": [
+						{
+							"name": "Withdraw Application",
+							"originalRequest": {
+								"method": "PATCH",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{freelancer_token}}"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/job/applications/68a58b366113ba1524d78fb7/withdraw",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"job",
+										"applications",
+										"68a58b366113ba1524d78fb7",
+										"withdraw"
+									]
+								}
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "58"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"3a-kA7bTLyxEHjoSgIrPr4WuC8jAZ8\""
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 20 Aug 2025 08:58:55 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"status\": false,\n    \"message\": \"Application already withdrawn\"\n}"
+						}
+					]
+				},
+				{
+					"name": "Check Job Application Status",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{freelancerToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{freelancer_token}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/freelancer/jobs/68a4b105556715edb9caebd9/check",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"freelancer",
+								"jobs",
+								"68a4b105556715edb9caebd9",
+								"check"
+							]
+						},
+						"description": "Check if freelancer applied to specific job"
+					},
+					"response": [
+						{
+							"name": "Check Job Application Status",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{freelancer_token}}"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/freelancer/jobs/68a4b105556715edb9caebd9/check",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"freelancer",
+										"jobs",
+										"68a4b105556715edb9caebd9",
+										"check"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "258"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"102-EsFJOos03hw7uMGmxDw12UAevJU\""
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 20 Aug 2025 08:57:32 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"status\": \"success\",\n    \"message\": \"Job application status checked\",\n    \"data\": {\n        \"hasApplied\": true,\n        \"application\": {\n            \"id\": \"68a58b366113ba1524d78fb7\",\n            \"status\": \"applied\",\n            \"appliedAt\": \"2025-08-20T08:45:42.879Z\",\n            \"proposedRate\": 21000,\n            \"lastUpdated\": \"2025-08-20T08:45:42.881Z\"\n        }\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "Get Job Applications",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{userToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{user_token}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/job/68a4b105556715edb9caebd9/applications",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"job",
+								"68a4b105556715edb9caebd9",
+								"applications"
+							]
+						},
+						"description": "Get all applications for a specific job"
+					},
+					"response": [
+						{
+							"name": "Get Job Applications",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{user_token}}"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/job/68a4b105556715edb9caebd9/applications",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"job",
+										"68a4b105556715edb9caebd9",
+										"applications"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "1578"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"62a-DanF0jpwd2kuiD12DIdA12vfxGk\""
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 20 Aug 2025 10:29:05 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"status\": \"success\",\n    \"message\": \"Job applications fetched successfully\",\n    \"data\": {\n        \"job\": {\n            \"_id\": \"68a4b105556715edb9caebd9\",\n            \"title\": \"Need DJ\",\n            \"description\": \"Need a profesional dj for one night\",\n            \"budget\": 20000,\n            \"duration\": 60,\n            \"totalApplications\": 1\n        },\n        \"applications\": [\n            {\n                \"_id\": \"68a58b366113ba1524d78fb7\",\n                \"job\": \"68a4b105556715edb9caebd9\",\n                \"freelancer\": {\n                    \"_id\": \"68a577d6200c3edc9b7b78e8\",\n                    \"name\": \"Jayanta\",\n                    \"phone\": \"1111111111\",\n                    \"profession\": \"The DJ Guy\",\n                    \"summary\": \"I have total exprience of 2.5 year\",\n                    \"isRegistered\": true,\n                    \"pricePerHr\": 2000,\n                    \"skills\": [\n                        \"DJ\",\n                        \"Light\",\n                        \"Team Leading\"\n                    ],\n                    \"image\": \"https://ik.imagekit.io/fqbwqlzwt/kamdham/noImage.png\",\n                    \"status\": \"active\",\n                    \"languages\": [\n                        \"Bengali\",\n                        \"Hindi\",\n                        \"English\"\n                    ],\n                    \"createdAt\": \"2025-08-20T07:23:02.407Z\",\n                    \"updatedAt\": \"2025-08-20T08:04:59.980Z\",\n                    \"otp\": \"661966\",\n                    \"otpExpiry\": \"2025-08-20T07:28:17.997Z\",\n                    \"category\": [\n                        {\n                            \"_id\": \"689dd21d16c693d4cffe25db\",\n                            \"name\": \"Dj\"\n                        }\n                    ],\n                    \"email\": \"jayanta@freelancer.in\",\n                    \"city\": \"kolkata\",\n                    \"state\": \"west bengal\"\n                },\n                \"status\": \"withdrawn\",\n                \"proposedRate\": 21000,\n                \"statusHistory\": [\n                    {\n                        \"status\": \"applied\",\n                        \"changedBy\": \"68a577d6200c3edc9b7b78e8\",\n                        \"changedByModel\": \"Freelancer\",\n                        \"notes\": \"Initial application submitted\",\n                        \"_id\": \"68a58b366113ba1524d78fb8\",\n                        \"changedAt\": \"2025-08-20T08:45:42.879Z\"\n                    },\n                    {\n                        \"status\": \"withdrawn\",\n                        \"changedBy\": \"68a577d6200c3edc9b7b78e8\",\n                        \"changedByModel\": \"Freelancer\",\n                        \"notes\": \"Application withdrawn by freelancer\",\n                        \"_id\": \"68a58e4063813faf6e6e9624\",\n                        \"changedAt\": \"2025-08-20T08:58:40.099Z\"\n                    }\n                ],\n                \"appliedAt\": \"2025-08-20T08:45:42.879Z\",\n                \"lastUpdated\": \"2025-08-20T08:58:40.103Z\",\n                \"createdAt\": \"2025-08-20T08:45:42.881Z\",\n                \"updatedAt\": \"2025-08-20T08:58:40.103Z\"\n            }\n        ]\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "Update Application Status - Shortlist[user]",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{userToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{user_token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"status\": \"shortlisted\",\n  \"notes\": \"Great portfolio, scheduling interview\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/job/applications/68a58b366113ba1524d78fb7/status",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"job",
+								"applications",
+								"68a58b366113ba1524d78fb7",
+								"status"
+							]
+						},
+						"description": "Shortlist a candidate"
+					},
+					"response": [
+						{
+							"name": "Update Application Status - Shortlist",
+							"originalRequest": {
+								"method": "PATCH",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Authorization",
+										"value": "Bearer {{user_token}}"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"status\": \"shortlisted\",\n    \"notes\": \"Great portfolio, scheduling interview\"\n}"
+								},
+								"url": {
+									"raw": "{{baseUrl}}/job/applications/68a58b366113ba1524d78fb7/status",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"job",
+										"applications",
+										"68a58b366113ba1524d78fb7",
+										"status"
+									]
+								}
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "84"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"54-M4Jjhd53hqARX3P2PP7DHoK/INM\""
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 20 Aug 2025 09:04:20 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"status\": false,\n    \"message\": \"Invalid status transition from withdrawn to shortlisted\"\n}"
+						}
+					]
+				},
+				{
+					"name": "Update Application Status - Hire[user]",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{userToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{user_token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"status\": \"hired\",\n  \"notes\": \"Perfect fit for the project, starting immediately\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/job/applications/68a58b366113ba1524d78fb7/status",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"job",
+								"applications",
+								"68a58b366113ba1524d78fb7",
+								"status"
+							]
+						},
+						"description": "Hire a candidate"
+					},
+					"response": [
+						{
+							"name": "Update Application Status - Hire",
+							"originalRequest": {
+								"method": "PATCH",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Authorization",
+										"value": "Bearer {{user_token}}"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"status\": \"hired\",\n  \"notes\": \"Perfect fit for the project, starting immediately\"\n}"
+								},
+								"url": {
+									"raw": "{{baseUrl}}/job/applications/68a58b366113ba1524d78fb7/status",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"job",
+										"applications",
+										"68a58b366113ba1524d78fb7",
+										"status"
+									]
+								}
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "78"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"4e-JMI/MkrWjgLvy8jNEcz7+aQDAUw\""
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 20 Aug 2025 10:32:06 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"status\": false,\n    \"message\": \"Invalid status transition from withdrawn to hired\"\n}"
+						}
+					]
+				},
+				{
+					"name": "Update Application Status - Reject[user]",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{userToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{user_token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"status\": \"rejected\",\n  \"notes\": \"Thank you for your application, we went with another candidate\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/job/applications/68a58b366113ba1524d78fb7/status",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"job",
+								"applications",
+								"68a58b366113ba1524d78fb7",
+								"status"
+							]
+						},
+						"description": "Reject a candidate"
+					},
+					"response": [
+						{
+							"name": "Update Application Status - Reject",
+							"originalRequest": {
+								"method": "PATCH",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Authorization",
+										"value": "Bearer {{user_token}}"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"status\": \"rejected\",\n  \"notes\": \"Thank you for your application, we went with another candidate\"\n}"
+								},
+								"url": {
+									"raw": "{{baseUrl}}/job/applications/68a58b366113ba1524d78fb7/status",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"job",
+										"applications",
+										"68a58b366113ba1524d78fb7",
+										"status"
+									]
+								}
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "81"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"51-5F9D+vnnLJuaUIZZKx56anU3/KA\""
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 20 Aug 2025 10:32:19 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"status\": false,\n    \"message\": \"Invalid status transition from withdrawn to rejected\"\n}"
+						}
+					]
+				},
+				{
+					"name": "Bulk Update Application Status[admin,user]",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{adminToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{admin_token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"applicationIds\": [\"68a58b366113ba1524d78fb7\"],\n  \"status\": \"rejected\",\n  \"notes\": \"Bulk rejection due to project cancellation\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/job/applications/bulk-update",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"job",
+								"applications",
+								"bulk-update"
+							]
+						},
+						"description": "Bulk update multiple application statuses (admin only)"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Application Analytics[user]",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{userToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{user_token}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/job/applications/analytics?jobId=68a4b105556715edb9caebd9",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"job",
+								"applications",
+								"analytics"
+							],
+							"query": [
+								{
+									"key": "jobId",
+									"value": "68a4b105556715edb9caebd9"
+								}
+							]
+						},
+						"description": "Get application analytics for employer"
+					},
+					"response": [
+						{
+							"name": "Get Application Analytics",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{user_token}}"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/job/applications/analytics?jobId=68a4b105556715edb9caebd9",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"job",
+										"applications",
+										"analytics"
+									],
+									"query": [
+										{
+											"key": "jobId",
+											"value": "68a4b105556715edb9caebd9"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "344"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"158-pSwkfmLXvDLHPAySeY/97D9C8/s\""
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 20 Aug 2025 10:33:02 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"status\": \"success\",\n    \"message\": \"Application analytics fetched successfully\",\n    \"data\": {\n        \"totalApplications\": 1,\n        \"statusBreakdown\": {\n            \"applied\": 0,\n            \"shortlisted\": 0,\n            \"hired\": 0,\n            \"rejected\": 0,\n            \"withdrawn\": 1\n        },\n        \"averageProposedRate\": \"21000.00\",\n        \"applicationTrends\": {},\n        \"conversionRates\": {\n            \"applicationToShortlist\": \"0.00\",\n            \"shortlistToHire\": 0,\n            \"overallHireRate\": \"0.00\"\n        }\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "delete job[admin,user]",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{adminToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n     \"title\":\"Need DJ\",\n        \"description\":\"Need a profesional dj for one night\",\n        \"duration\":60,\n        \"requirements\":[\n            \"Minumum 1 yr exprience\",\n            \"Good behabiour\",\n            \"non alcholoic\"\n        ],\n        \"city\":\"mumbai\",\n        \"state\":\"maharasra\",\n        \"budget\":20000,\n        \"deadLine\":\"24/07/2026\",\n        \"venue\":\"exotic park,G.K. Road\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/job/68a4a34c60a873c39e087629",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"job",
+								"68a4a34c60a873c39e087629"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "delete",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n     \"title\":\"Need DJ\",\n        \"description\":\"Need a profesional dj for one night\",\n        \"duration\":60,\n        \"requirements\":[\n            \"Minumum 1 yr exprience\",\n            \"Good behabiour\",\n            \"non alcholoic\"\n        ],\n        \"city\":\"mumbai\",\n        \"state\":\"maharasra\",\n        \"budget\":20000,\n        \"deadLine\":\"24/07/2026\",\n        \"venue\":\"exotic park,G.K. Road\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/job/68a49e8cb609119634f65483",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"job",
+										"68a49e8cb609119634f65483"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "532"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"214-lHZvt/7VCSZB4ko3eJAB2FkT7Mc\""
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 19 Aug 2025 16:15:55 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"status\": \"success\",\n    \"message\": \"Job deleted\",\n    \"data\": {\n        \"status\": \"active\",\n        \"_id\": \"68a49e8cb609119634f65483\",\n        \"title\": \"Need DJ\",\n        \"description\": \"Need a profesional dj for one night\",\n        \"requirements\": [\n            \"Minumum 1 yr exprience\",\n            \"Good behabiour\",\n            \"non alcholoic\"\n        ],\n        \"duration\": 60,\n        \"city\": \"mumbai\",\n        \"state\": \"maharasra\",\n        \"venue\": \"exotic park,G.K. Road\",\n        \"applicant\": [],\n        \"shortListed\": [],\n        \"postedBy\": \"68a3482b6f7baddeaefbc52b\",\n        \"deadLine\": \"2025-08-19T15:55:56.977Z\",\n        \"budget\": 20000,\n        \"createdAt\": \"2025-08-19T15:55:56.988Z\",\n        \"updatedAt\": \"2025-08-19T15:55:56.988Z\"\n    }\n}"
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "freelancer",
+			"item": [
+				{
+					"name": "send OTP",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"phone\":\"1111111111\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/freelancer/send-otp",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"freelancer",
+								"send-otp"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "send otp",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"phone\":\"1111111111\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/freelancer/send-otp",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"freelancer",
+										"send-otp"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "120"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"78-qIngghgQX0/bc71WN01N2LhGkec\""
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 20 Aug 2025 07:16:12 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"status\": \"success\",\n    \"message\": \"OTP sent successfully\",\n    \"data\": {\n        \"isRegistered\": false,\n        \"phone\": \"1111111111\",\n        \"otp\": \"571702\"\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "verify OTP",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"phone\":\"1111111111\",\n    \"otp\":\"621820\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/freelancer/verify-otp",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"freelancer",
+								"verify-otp"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "verify otp",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"phone\":\"1111111111\",\n    \"otp\":\"140332\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/freelancer/verify-otp",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"freelancer",
+										"verify-otp"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "304"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"130-gIeWjPO9UGTuwEOJgSNhLBH3XDE\""
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 20 Aug 2025 07:23:12 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"status\": \"success\",\n    \"message\": \"OTP verified successfully\",\n    \"data\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OGE1NzdkNjIwMGMzZWRjOWI3Yjc4ZTgiLCJlbWFpbCI6IjExMTExMTExMTEiLCJ1c2VyVHlwZSI6ImZyZWVsYW5jZXIiLCJpYXQiOjE3NTU2NzQ1OTIsImV4cCI6MTc4Njc3ODU5Mn0.37IyxuApQDKUNo2raaVw0XffOe6dKVt4sskzd99GwMk\"\n}"
+						}
+					]
+				},
+				{
+					"name": "Register",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{freelancerToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Jayanta\",\n    \"email\": \"jayanta@freelancer.in\",\n    \"profession\": \"The DJ Guy\",\n    \"summary\": \"I have total exprience of 2.5 year\",\n    \"pricePerHr\": 2000,\n    \"city\":\"kolkata\",\n    \"state\":\"west bengal\",\n    \"category\": [\n        \"689dd21d16c693d4cffe25db\"\n    ],\n    \"skills\": [\n        \"DJ\",\n        \"Light\",\n        \"Team Leading\"\n    ],\n    \"languages\": [\n        \"Bengali\",\n        \"Hindi\",\n        \"English\"\n    ]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/freelancer/register",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"freelancer",
+								"register"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Register",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"name\": \"Jayanta\",\n    \"email\": \"jayanta@freelancer.in\",\n    \"profession\": \"The DJ Guy\",\n    \"summary\": \"I have total exprience of 2.5 year\",\n    \"pricePerHr\": 2000,\n    \"category\": [\n        \"689dd21d16c693d4cffe25db\"\n    ],\n    \"skills\": [\n        \"DJ\",\n        \"Light\",\n        \"Team Leading\"\n    ],\n    \"languages\": [\n        \"Bengali\",\n        \"Hindi\",\n        \"English\"\n    ]\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/freelancer/register",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"freelancer",
+										"register"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "401"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"191-o3eoYNf4A/69zXY6SQQ+FznY36U\""
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 20 Aug 2025 07:36:26 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"status\": \"success\",\n    \"message\": \"Freelancer registered successfully\",\n    \"data\": {\n        \"name\": \"Jayanta\",\n        \"phone\": \"1111111111\",\n        \"email\": \"jayanta@freelancer.in\",\n        \"profession\": \"The DJ Guy\",\n        \"summary\": \"I have total exprience of 2.5 year\",\n        \"pricePerHr\": 2000,\n        \"skills\": [\n            \"DJ\",\n            \"Light\",\n            \"Team Leading\"\n        ],\n        \"languages\": [\n            \"Bengali\",\n            \"Hindi\",\n            \"English\"\n        ],\n        \"status\": \"inactive\",\n        \"image\": \"https://ik.imagekit.io/fqbwqlzwt/kamdham/noImage.png\"\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "update",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{freelancerToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \n    \"city\":\"kolkata\", //all small\n    \"state\":\"west bengal\" //all small\n \n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/freelancer/",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"freelancer",
+								""
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Register",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"name\": \"Jayanta\",\n    \"email\": \"jayanta@freelancer.in\",\n    \"profession\": \"The DJ Guy\",\n    \"summary\": \"I have total exprience of 2.5 year\",\n    \"pricePerHr\": 2000,\n    \"category\": [\n        \"689dd21d16c693d4cffe25db\"\n    ],\n    \"skills\": [\n        \"DJ\",\n        \"Light\",\n        \"Team Leading\"\n    ],\n    \"languages\": [\n        \"Bengali\",\n        \"Hindi\",\n        \"English\"\n    ]\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/freelancer/register",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"freelancer",
+										"register"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "401"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"191-o3eoYNf4A/69zXY6SQQ+FznY36U\""
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 20 Aug 2025 07:36:26 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"status\": \"success\",\n    \"message\": \"Freelancer registered successfully\",\n    \"data\": {\n        \"name\": \"Jayanta\",\n        \"phone\": \"1111111111\",\n        \"email\": \"jayanta@freelancer.in\",\n        \"profession\": \"The DJ Guy\",\n        \"summary\": \"I have total exprience of 2.5 year\",\n        \"pricePerHr\": 2000,\n        \"skills\": [\n            \"DJ\",\n            \"Light\",\n            \"Team Leading\"\n        ],\n        \"languages\": [\n            \"Bengali\",\n            \"Hindi\",\n            \"English\"\n        ],\n        \"status\": \"inactive\",\n        \"image\": \"https://ik.imagekit.io/fqbwqlzwt/kamdham/noImage.png\"\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "delete freelancer",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{adminToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"phone\":\"1111111111\",\n    \"otp\":\"571702\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/freelancer/68a577d6200c3edc9b7b78e8",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"freelancer",
+								"68a577d6200c3edc9b7b78e8"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "delete freelancer",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"phone\":\"1111111111\",\n    \"otp\":\"571702\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/freelancer/68a575f818950a56692a9603",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"freelancer",
+										"68a575f818950a56692a9603"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "458"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"1ca-x129XErsFcJGDhAfuBXUW4XrnoQ\""
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 20 Aug 2025 07:21:12 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"status\": \"success\",\n    \"message\": \"Freelancer deleted successfully\",\n    \"data\": {\n        \"_id\": \"68a575f818950a56692a9603\",\n        \"name\": \"Freelancer_1111\",\n        \"phone\": \"1111111111\",\n        \"profession\": \"\",\n        \"summary\": \"\",\n        \"isRegistered\": true,\n        \"pricePerHr\": 0,\n        \"skills\": [],\n        \"image\": \"https://ik.imagekit.io/fqbwqlzwt/kamdham/noImage.png\",\n        \"status\": \"inactive\",\n        \"languages\": [],\n        \"createdAt\": \"2025-08-20T07:15:04.056Z\",\n        \"updatedAt\": \"2025-08-20T07:19:48.422Z\",\n        \"otp\": \"115910\",\n        \"otpExpiry\": \"2025-08-20T07:24:48.365Z\"\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "getAll",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{adminToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/freelancer?status=active&skills=DJ&minPrice=500&maxPrice=5000&city=kolkata&state=west bengal&limit=10&page=1",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"freelancer"
+							],
+							"query": [
+								{
+									"key": "status",
+									"value": "active"
+								},
+								{
+									"key": "skills",
+									"value": "DJ"
+								},
+								{
+									"key": "minPrice",
+									"value": "500"
+								},
+								{
+									"key": "maxPrice",
+									"value": "5000"
+								},
+								{
+									"key": "city",
+									"value": "kolkata"
+								},
+								{
+									"key": "state",
+									"value": "west bengal"
+								},
+								{
+									"key": "limit",
+									"value": "10"
+								},
+								{
+									"key": "page",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "getAll",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/freelancer?skills=DJ&minPrice=500&maxPrice=5000&city=kolkata&state=west bengal&limit=10&page=1",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"freelancer"
+									],
+									"query": [
+										{
+											"key": "skills",
+											"value": "DJ"
+										},
+										{
+											"key": "minPrice",
+											"value": "500"
+										},
+										{
+											"key": "maxPrice",
+											"value": "5000"
+										},
+										{
+											"key": "city",
+											"value": "kolkata"
+										},
+										{
+											"key": "state",
+											"value": "west bengal"
+										},
+										{
+											"key": "limit",
+											"value": "10"
+										},
+										{
+											"key": "page",
+											"value": "1"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "576"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"240-PYLwMknOq0g/aROnPKyrOHBV408\""
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 20 Aug 2025 08:08:47 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"status\": \"success\",\n    \"message\": \"Freelancers fetched successfully\",\n    \"data\": {\n        \"freelancers\": [\n            {\n                \"_id\": \"68a577d6200c3edc9b7b78e8\",\n                \"name\": \"Jayanta\",\n                \"phone\": \"1111111111\",\n                \"profession\": \"The DJ Guy\",\n                \"summary\": \"I have total exprience of 2.5 year\",\n                \"pricePerHr\": 2000,\n                \"skills\": [\n                    \"DJ\",\n                    \"Light\",\n                    \"Team Leading\"\n                ],\n                \"image\": \"https://ik.imagekit.io/fqbwqlzwt/kamdham/noImage.png\",\n                \"languages\": [\n                    \"Bengali\",\n                    \"Hindi\",\n                    \"English\"\n                ],\n                \"category\": [\n                    {\n                        \"_id\": \"689dd21d16c693d4cffe25db\",\n                        \"name\": \"Dj\"\n                    }\n                ],\n                \"city\": \"kolkata\",\n                \"state\": \"west bengal\"\n            }\n        ],\n        \"pagination\": {\n            \"currentPage\": 1,\n            \"totalPages\": 1,\n            \"totalItems\": 1,\n            \"itemsPerPage\": 10\n        }\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "Resume[admin]",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{adminToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"freelancerId\":\"68a5a7ce2188730d7a4eb91f\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/freelancer/resume",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"freelancer",
+								"resume"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Suspend[admin]",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{adminToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"freelancerId\":\"68a577d6200c3edc9b7b78e8\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/freelancer/suspend",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"freelancer",
+								"suspend"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getById",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/freelancer/68a577d6200c3edc9b7b78e8",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"freelancer",
+								"68a577d6200c3edc9b7b78e8"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "getAll Copy",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/freelancer/68a577d6200c3edc9b7b78e8",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"freelancer",
+										"68a577d6200c3edc9b7b78e8"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "511"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"1ff-rvDntwmCZ4ClYOngJlBti9O6c9c\""
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 20 Aug 2025 07:37:56 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"status\": \"success\",\n    \"message\": \"Freelancer fetched successfully\",\n    \"data\": {\n        \"_id\": \"68a577d6200c3edc9b7b78e8\",\n        \"name\": \"Jayanta\",\n        \"phone\": \"1111111111\",\n        \"profession\": \"The DJ Guy\",\n        \"summary\": \"I have total exprience of 2.5 year\",\n        \"isRegistered\": true,\n        \"pricePerHr\": 2000,\n        \"skills\": [\n            \"DJ\",\n            \"Light\",\n            \"Team Leading\"\n        ],\n        \"image\": \"https://ik.imagekit.io/fqbwqlzwt/kamdham/noImage.png\",\n        \"status\": \"inactive\",\n        \"languages\": [\n            \"Bengali\",\n            \"Hindi\",\n            \"English\"\n        ],\n        \"category\": [\n            {\n                \"_id\": \"689dd21d16c693d4cffe25db\",\n                \"name\": \"Dj\"\n            }\n        ],\n        \"email\": \"jayanta@freelancer.in\"\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "stats[admin]",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{adminToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/freelancer/stats",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"freelancer",
+								"stats"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "stats[admin]",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/freelancer/stats",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"freelancer",
+										"stats"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "79"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"4f-/aZK+4aXP55Iwk/qlKL0C0ud7SU\""
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 20 Aug 2025 08:06:39 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"status\": \"success\",\n    \"message\": \"Freelancer count fetched successfully\",\n    \"data\": 1\n}"
+						}
+					]
+				}
+			]
+		}
+	],
+	"variable": [
+		{
+			"key": "application_id",
+			"value": ""
+		}
+	]
+}

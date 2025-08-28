@@ -11,6 +11,12 @@ const walletSchema = new mongoose.Schema(
         ref: "Transaction",
       },
     ],
+    freelancer: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Freelancer",
+      required: true,
+      unique: true,
+    },
   },
 
   {
@@ -18,5 +24,5 @@ const walletSchema = new mongoose.Schema(
     versionKey: false,
   }
 );
-const WalletModel = mongoose.model("wallet", walletSchema);
+const WalletModel = mongoose.model("Wallet", walletSchema);
 export default WalletModel;

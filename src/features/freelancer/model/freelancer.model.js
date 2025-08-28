@@ -43,20 +43,12 @@ const freelancerSchema = new mongoose.Schema(
       required: true,
       default: 0.0,
     },
-
-    wallet: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Wallet",
-    },
     skills: [
       {
         type: String,
       },
     ],
-    rating: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Rating",
-    },
+
     image: {
       type: String,
       default: "https://ik.imagekit.io/fqbwqlzwt/kamdham/noImage.png",
