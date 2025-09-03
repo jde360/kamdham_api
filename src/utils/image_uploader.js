@@ -1,24 +1,42 @@
 import ImageKit from "imagekit";
 import AppError from "./error.js";
 import { httpCode } from "./httpCode.js";
+import { appConfig } from "./appConfig.js";
+import fs from "fs";
 var imagekit = new ImageKit({
-    publicKey : "your_public_api_key",
-    privateKey : "your_private_api_key",
-    urlEndpoint : "https://ik.imagekit.io/your_imagekit_id/"
+    publicKey: appConfig.IMAGEKIT_PUBLIC_KEY,
+    privateKey: appConfig.IMAGEKIT_PRIVATE_KEY,
 });
 
 
-export const uploadImage = async(image, folder,name) => {
+export const uploadImage = async (file, folder, name) => {
     try {
-    const res =   await  imagekit.upload(
-        {
-            file : image, //required
-            fileName : "image.jpg",   //required
-            folder: "/your_folder_name/"
-        }
-    );
+        console.log(name);
+
+        const res = await imagekit.upload(
+            {
+                file: file.path,
+                fileName: name,
+                folder: `/${folder}`,
+            }
+        );
+        await deleteImage(file.path);
+        return res.url;
+
     } catch (error) {
+        console.log(error);
+        await deleteImage(file.path);
         throw new AppError("Image upload failed", httpCode.BAD_REQUEST);
     }
 
+}
+
+const deleteImage = async (imageUrl) => {
+    fs.unlink(imageUrl, (err) => {
+        if (err) {
+            console.error("Error deleting file:", err);
+        } else {
+            console.log("File deleted successfully");
+        }
+    });
 }

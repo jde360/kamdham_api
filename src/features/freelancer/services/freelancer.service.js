@@ -9,7 +9,8 @@ import walletService from "../../wallet/service/wallet.service.js";
 
 const freelancerService = {
   generateOTP: () => {
-    return Math.floor(100000 + Math.random() * 900000).toString();
+    return 123456;
+    // return Math.floor(100000 + Math.random() * 900000).toString();
   },
 
   sendOTP: async (phone) => {
@@ -249,6 +250,10 @@ const freelancerService = {
 
       if (skills) {
         filter.skills = { $in: skills.split(",") };
+      }
+
+      if (status) {
+        filter.status = status;
       }
       if (minPrice && maxPrice) {
         filter.pricePerHr = {

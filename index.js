@@ -13,6 +13,11 @@ const startServer = async () => {
 
     app.use(express.urlencoded({ extended: true }));
     app.use("/api/v1", router);
+    //restricted route
+    app.use( (req, res, next) => {
+      res.status(404).json({ message: "Route not found" });
+    });
+    // Error handling middleware
     app.use(errorHandaler);
     app.listen(appConfig.PORT, () => {
       console.log(`Server started on port ${appConfig.PORT}`);

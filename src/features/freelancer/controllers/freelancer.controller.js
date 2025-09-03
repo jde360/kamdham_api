@@ -1,5 +1,6 @@
 import { formattedResponse } from "../../../utils/formatedRes.js";
 import { httpCode } from "../../../utils/httpCode.js";
+import { uploadImage } from "../../../utils/image_uploader.js";
 import freelancerService from "../services/freelancer.service.js";
 
 export const sendOTP = async (req, res, next) => {
@@ -113,16 +114,69 @@ export const updateFreelancer = async (req, res, next) => {
 };
 
 
-export const updateImages = async (req, res, next) => {
+export const updateAadharImage = async (req, res, next) => {
   try {
     const freelancerId = req.user.userId;
-    console.log(freelancerId);
-    
-    console.log(req.file);
+    const freeLancer = await freelancerService.getFreelancerById(freelancerId);
+    if (freeLancer.aadharImage) {
+      await deleteImage(freeLancer.aadharImage);
+    }
+
+    const imageUrl = await uploadImage(req.file, req.file.fieldname, `aadhar-image-${freelancerId}.${req.file.originalname.split('.')[1]}`);
+    const result = await freelancerService.updateFreelancer(
+      freelancerId,
+      { "aadharImage": imageUrl }
+    );
     return res
       .status(httpCode.OK)
       .json(formattedResponse("Freelancer updated successfully", result));
   } catch (error) {
+    next(error);
+  }
+}
+
+
+export const updatePanImage = async (req, res, next) => {
+  try {
+       const freeLancer = await freelancerService.getFreelancerById(freelancerId);
+    if (freeLancer.panImage) {
+      await deleteImage(freeLancer.aadharImage);
+    }
+    
+    const freelancerId = req.user.userId;
+    const imageUrl = await uploadImage(req.file, req.file.fieldname, req.file.filename);
+    const result = await freelancerService.updateFreelancer(
+      freelancerId,
+      { "panImage": imageUrl }
+    );
+
+    return res
+      .status(httpCode.OK)
+      .json(formattedResponse("Freelancer updated successfully", result));
+  } catch (error) {
+    next(error);
+  }
+}
+
+
+
+export const updateProfileImage = async (req, res, next) => {
+  try {
+    const freelancerId = req.user.userId;
+        const freeLancer = await freelancerService.getFreelancerById(freelancerId);
+    if (freeLancer.image) {
+      await deleteImage(freeLancer.image);
+    }
+    const imageUrl = await uploadImage(req.file, req.file.fieldname, req.file.filename);
+    const result = await freelancerService.updateFreelancer(
+      freelancerId,
+      { image: imageUrl }
+    );
+    return res
+      .status(httpCode.OK)
+      .json(formattedResponse("Freelancer updated successfully", result));
+  }
+  catch (error) {
     next(error);
   }
 }

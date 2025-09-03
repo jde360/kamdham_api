@@ -16,7 +16,9 @@ import {
   getFreelancerApplicationStats,
   checkJobApplication,
   getFreelancerStatus,
-  updateImages,
+  updatePanImage,
+  updateAadharImage,
+  updateProfileImage,
 } from "../features/freelancer/controllers/freelancer.controller.js";
 import authMiddleware from "../middlewares/auth.middleware.js";
 import uploadMiddleWare from "../middlewares/multer.middleware.js";
@@ -32,8 +34,9 @@ router.get("/profile", authMiddleware(["freelancer"]), getFreelancerById); // Ge
 router.get('/status', authMiddleware(['freelancer']), getFreelancerStatus); // Get own status
 router.put("/profile", authMiddleware(["freelancer"]), updateFreelancer); // Update own profile
 
-router.put('/aadhar', authMiddleware(['freelancer']), uploadMiddleWare.single('aadhar'), updateImages); // Update Aadhar details
-router.put('/pan', authMiddleware(['freelancer']), updateFreelancer);
+router.put('/aadhar', authMiddleware(['freelancer']), uploadMiddleWare.single('aadhar'), updateAadharImage); // Update Aadhar details
+router.put('/pan', authMiddleware(['freelancer']), uploadMiddleWare.single('pan'), updatePanImage);
+router.put('/profile-image', authMiddleware(['freelancer']), uploadMiddleWare.single('profile'), updateProfileImage);
 
 router.get("/jobs/applied", authMiddleware(["freelancer"]), getAppliedJobs);
 router.get(

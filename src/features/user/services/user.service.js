@@ -7,7 +7,8 @@ import { generateToken } from "../../../utils/token.config.js";
 
 const userService = {
   generateOTP: () => {
-    return Math.floor(100000 + Math.random() * 900000).toString();
+    // return Math.floor(100000 + Math.random() * 900000).toString();
+    return 123456;
   },
 
   sendOTP: async (phone) => {
