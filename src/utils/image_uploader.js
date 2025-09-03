@@ -6,6 +6,7 @@ import fs from "fs";
 var imagekit = new ImageKit({
     publicKey: appConfig.IMAGEKIT_PUBLIC_KEY,
     privateKey: appConfig.IMAGEKIT_PRIVATE_KEY,
+    urlEndpoint: appConfig.IMAGEKIT_URL_ENDPOINT
 });
 
 
