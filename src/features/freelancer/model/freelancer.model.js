@@ -10,6 +10,27 @@ const freelancerSchema = new mongoose.Schema(
       required: true,
       unique: [true, "this phone number already used"],
     },
+    pan: {
+      type: String,
+      require: [true, "please provide your PAN number"],
+      unique: [true, "this PAN number already used"]
+    },
+    aadhaar: {
+      type: String,
+      require: [true, "Please provide your aadhar number"],
+      unique: [true, "this Aadhaar number already used"]
+
+    },
+    panImage: {
+      type: "String",
+      default: ""
+    },
+    aadharImage: {
+
+      type: "String",
+      default: ""
+    },
+
     category: [
       {
         type: mongoose.Schema.Types.ObjectId,

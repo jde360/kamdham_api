@@ -9,4 +9,5 @@ const storage =  multer.diskStorage({
     cb(null, `${file.fieldname}-${uniqueSuffix}.${file.mimetype.split('/')[1]}`)
   }
 })
-export const upload = multer({ storage: storage });
+ const uploadMiddleWare = multer({ storage: storage });
+ export default uploadMiddleWare;

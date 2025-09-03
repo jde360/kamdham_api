@@ -15,8 +15,11 @@ import {
   getAppliedJobs,
   getFreelancerApplicationStats,
   checkJobApplication,
+  getFreelancerStatus,
+  updateImages,
 } from "../features/freelancer/controllers/freelancer.controller.js";
 import authMiddleware from "../middlewares/auth.middleware.js";
+import uploadMiddleWare from "../middlewares/multer.middleware.js";
 
 const router = express.Router();
 
@@ -26,7 +29,11 @@ router.post("/verify-otp", verifyOTP);
 router.post("/register", authMiddleware(["freelancer"]), registerFreelancer);
 
 router.get("/profile", authMiddleware(["freelancer"]), getFreelancerById); // Get own profile
+router.get('/status', authMiddleware(['freelancer']), getFreelancerStatus); // Get own status
 router.put("/profile", authMiddleware(["freelancer"]), updateFreelancer); // Update own profile
+
+router.put('/aadhar', authMiddleware(['freelancer']), uploadMiddleWare.single('aadhar'), updateImages); // Update Aadhar details
+router.put('/pan', authMiddleware(['freelancer']), updateFreelancer);
 
 router.get("/jobs/applied", authMiddleware(["freelancer"]), getAppliedJobs);
 router.get(

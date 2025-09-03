@@ -51,6 +51,17 @@ export const getFreelancerById = async (req, res, next) => {
   }
 };
 
+export const getFreelancerStatus = async (req, res, next) => {
+  try {
+    const freelancerId = req.user.userId;
+    const result = await freelancerService.getFreelancerStatus(freelancerId);
+    return res
+      .status(httpCode.OK)
+      .json(formattedResponse("Freelancer status fetched successfully", result));
+  } catch (error) {
+    next(error);
+  }
+};
 // Get public freelancer profile
 export const getFreelancerProfile = async (req, res, next) => {
   try {
@@ -100,6 +111,21 @@ export const updateFreelancer = async (req, res, next) => {
     next(error);
   }
 };
+
+
+export const updateImages = async (req, res, next) => {
+  try {
+    const freelancerId = req.user.userId;
+    console.log(freelancerId);
+    
+    console.log(req.file);
+    return res
+      .status(httpCode.OK)
+      .json(formattedResponse("Freelancer updated successfully", result));
+  } catch (error) {
+    next(error);
+  }
+}
 
 export const deleteFreelancer = async (req, res, next) => {
   try {

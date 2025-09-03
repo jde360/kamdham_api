@@ -102,6 +102,8 @@ const freelancerService = {
         languages,
         state,
         city,
+        pan,
+        aadhaar
       } = freelancerData;
 
       if (!name) {
@@ -138,11 +140,11 @@ const freelancerService = {
       freelancer.languages = languages || freelancer.languages;
       freelancer.state = state || freelancer.state;
       freelancer.city = city || freelancer.city;
+      freelancer.pan = pan || freelancer.pan;
+      freelancer.aadhaar = aadhaar || freelancer.aadhaar
       freelancer.isRegistered = true;
       await freelancer.save();
       const wallet = await walletService.createWallet(freelancer._id);
-      console.log('wallet', wallet);
-      
       freelancer.wallet = wallet;
       await freelancer.save();
       return {
@@ -189,6 +191,41 @@ const freelancerService = {
         throw new AppError(`Freelancer not found`, httpCode.NOT_FOUND);
       }
       return result;
+    } catch (error) {
+      throw error;
+    }
+  },
+
+  getFreelancerStatus: async (id) => {
+    try {
+      const result = await FreelancerModel.findById(id)
+        .populate({
+          path: "category",
+          select: "name",
+        }).populate({
+          path: "wallet",
+          select: "balance",
+        })
+        .select(
+          "-isRegistered -status -createdAt -updatedAt"
+        )
+
+      if (!result) {
+        throw new AppError(`Freelancer not found`, httpCode.NOT_FOUND);
+      }
+
+      if (result == 'inactive' && result.panImage == '') {
+        throw new AppError(`PAN Image not found`, httpCode.NOT_FOUND);
+      }
+
+      if (result == 'inactive' && result.aadharImage == '') {
+        throw new AppError(`Aadhar Image not found`, httpCode.NOT_FOUND);
+      }
+
+      if (result == 'inactive') {
+        throw new AppError(`Freelancer is not approved`, httpCode.BAD_REQUEST);
+      }
+      return 'active';
     } catch (error) {
       throw error;
     }
